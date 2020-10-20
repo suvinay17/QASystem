@@ -1,0 +1,19 @@
+import nltk
+sen = "Sam read the New York Times at his place."
+tokens = nltk.word)tokenize(sent)
+token_pos_list = nltk.pos_tag(tokens) # Get POS tags
+named_entity_tree = nltk.ne_chunk(token_pos_list) # easier to see when printed compared to Tuple (tree of trees, the things
+# you see in parenthesis are trees
+ne_tree[0].label()
+ne_tree[3]. leaves()
+' '.join(x[0] for x in ne_tree[3].leaves())
+for child in named_entity_tree:
+  if  type(chile) == nltk.tree.Tree:
+    " ".join(x[0] for x in child.leaves())
+pattern = 'NP : {<DT> ? <JJ|PR.*>*<NN|NNS>}'
+#defining Nound phrase as determiner, QUestion mark is 0 or 1, * all or after
+np_parser = nltk.RegexpParser(pattern)
+np_parser.parse(token_pos_list)
+# or instead of 16
+np_parser.parse(ne_tree)
+#use chunk function with regex to np_parse
