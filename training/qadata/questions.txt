@@ -1,0 +1,285 @@
+Number: 0
+What hockey team did Wayne Gretzky play for?
+
+Number: 1
+What flower did Vincent Van Gogh paint?
+
+Number: 2
+What is anise?
+
+Number: 3
+At Christmas time, what is the traditional thing to do under the mistletoe?
+
+Number: 5
+What kind of a sports team is the Wisconsin Badgers?
+
+Number: 7
+What is pandoro?
+
+Number: 8
+What is measured in curies?
+
+Number: 9
+What is the name of the Michelangelo painting that shows two hands with fingers touching?
+
+Number: 10
+What hair color can I use to just cover a little gray?
+
+Number: 11
+What are geckos?
+
+Number: 12
+Who owns CNN?
+
+Number: 13
+Can you give me the name of a clock maker in London, England?
+
+Number: 14
+Where did guinea pigs originate?
+
+Number: 15
+What is thalassemia?
+
+Number: 17
+How many home runs did Lou Gehrig have during his career?
+
+Number: 18
+Where did Woodstock take place?
+
+Number: 19
+What nationality was Jackson Pollock?
+
+Number: 20
+Tell me what city the Kentucky Horse Park is near?
+
+Number: 21
+What famous model was married to Billy Joel?
+
+Number: 22
+What is the population of Ohio?
+
+Number: 24
+What continent is Bolivia on?
+
+Number: 26
+Where are the U.S. headquarters for Procter & Gamble?
+
+Number: 28
+What is the most common kind of skin cancer in the U.S.?
+
+Number: 29
+When was the Hoover Dam constructed?
+
+Number: 30
+Who coined the term "cyberspace" in his novel "Neuromancer"?
+
+Number: 31
+What does CPR stand for?
+
+Number: 34
+What is the chemical formula/name for napalm?
+
+Number: 35
+What does CNN stand for?
+
+Number: 36
+Who was Samuel Johnsons's friend and biographer?
+
+Number: 37
+Who provides telephone service in Orange County, California?
+
+Number: 39
+What is a stratocaster?
+
+Number: 40
+Who is Henry Butler?
+
+Number: 41
+Who is the founder of the Wal-Mart stores?
+
+Number: 43
+What's the name of the song Will Smith sings about parents?
+
+Number: 45
+What does Nicholas Cage do for a living?
+
+Number: 46
+Name one of the Seven Wonders of the Ancient World.
+
+Number: 47
+What's the name of Pittsburgh's baseball team?
+
+Number: 48
+For what disease is the drug Sinemet used as a treatment?
+
+Number: 49
+Where did Wicca first develop?
+
+Number: 50
+What is the mascot for Notre Dame University?
+
+Number: 51
+How did Bob Marley die?
+
+Number: 52
+Who was the author of the book about computer hackers called "The Cuckoo's Egg: Tracking a Spy Through the Maze of Computer Espionage"?
+
+Number: 53
+Who reports the weather on the "Good Morning America" television show?
+
+Number: 54
+What is the name of the Jewish alphabet?
+
+Number: 55
+What are the Poconos?
+
+Number: 56
+What Cruise Line does Kathie Lee Gifford advertise for?
+
+Number: 57
+Where are diamonds mined?
+
+Number: 58
+What store does Martha Stewart advertise for?
+
+Number: 62
+Who created "The Muppets"?
+
+Number: 63
+What does hazmat stand for?
+
+Number: 65
+How many months does a normal human pregnancy last?
+
+Number: 66
+What's the most famous tourist attraction in Rome?
+
+Number: 68
+What cereal goes "snap, crackle, pop"?
+
+Number: 69
+Who wrote the song, "Silent Night"?
+
+Number: 70
+What year did Hitler die?
+
+Number: 72
+Who was Darth Vader's son?
+
+Number: 73
+Who portrayed Jake in the television show, "Jake and the Fatman"?
+
+Number: 74
+Where is Amsterdam?
+
+Number: 75
+Name a civil war battlefield.
+
+Number: 76
+What is Black Hills, South Dakota most famous for?
+
+Number: 77
+When was the first Barbie produced?
+
+Number: 78
+What caused the Lynmouth floods?
+
+Number: 79
+What is the zip code for Fremont, CA?
+
+Number: 80
+Name a Gaelic language.
+
+Number: 81
+Who is Terrence Malick?
+
+Number: 82
+What's the name of a golf course in Myrtle Beach?
+
+Number: 83
+When was Beethoven born?
+
+Number: 84
+What's the name of the actress who starred in the movie, "Silence of the Lambs"?
+
+Number: 86
+What's another name for aspartame?
+
+Number: 87
+What state is Niagra Falls located in?
+
+Number: 88
+Where is Venezuela?
+
+Number: 89
+What is the real name of the singer, Madonna?
+
+Number: 90
+What is Dick Clark's birthday?
+
+Number: 91
+Name an American made motorcycle.
+
+Number: 92
+What was the name of the sitcom that Alyssa Milano starred in with Tony Danza?
+
+Number: 93
+Name a female figure skater.
+
+Number: 94
+What is the name of the vaccine for chicken pox?
+
+Number: 95
+What is the name of the Lion King's son in the movie, "The Lion King"?
+
+Number: 99
+When was the NFL established?
+
+Number: 100
+Who was Jane Goodall?
+
+Number: 101
+What university was Woodrow Wilson President of?
+
+Number: 102
+What province is Edmonton located in?
+
+Number: 103
+What soft drink contains the largest amount of caffeine?
+
+Number: 104
+When did the California lottery begin?
+
+Number: 105
+What are pomegranates?
+
+Number: 106
+Who is the monarch of the United Kingdom?
+
+Number: 108
+Who shot Billy the Kid?
+
+Number: 109
+Who wrote the song, "Boys of Summer"?
+
+Number: 111
+Who won the rugby world cup in 1987?
+
+Number: 112
+When was the movie, Caligula, made?
+
+Number: 113
+Name a novel written by John Steinbeck.
+
+Number: 114
+Who wrote the book, "The Grinch Who Stole Christmas"?
+
+Number: 115
+What is the name of the company that manufactures the "American Girl" doll collection?
+
+Number: 116
+When was the bar-code invented?
+
+Number: 117
+What is the airport code for Los Angeles International?
+

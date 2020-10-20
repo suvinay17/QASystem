@@ -1,0 +1,383 @@
+0	Kings
+0	Gretzky\s+led\s+the\s+Oilers
+0	former\s+team.+Edmonton\s+Oilers
+0	leave\s+Edmonton
+0	Los\s+Angeles\s+Kings\s+acquired.+Gretzky
+0	Trade\s+Upsets\s+Oiler\s+Fans
+0	trading.+Gretzky\s+to.+Kings
+0	Oilers.+once\s+there\s+was\s+Wayne\s+Gretzky
+0	to\s+the\s+Los\s+Angeles\s+Kings
+0	to\s+the\s+struggling\s+Kings
+0	Gretzky\s+left\s+for\s+Los\s+Angeles
+0	Gretzky\s+to\s+(the\s+)?Los\s+Angeles
+0	Los\s+Angeles\s+Kings\s+hockey\s+team
+0	Los\s+Angeles\s+Kings\s*'?\s+superstar
+0	Gretzky\s+and\s+the\s+L\s*\.?\s*A\s*\.?\s+Kings
+0	Gretzky\s+\&\s+the\s+L\s*\.?\s*A\s*\.?\s+Kings
+0	Los\s+Angeles\s+Kings\s+(hockey\s+)?star
+0	Kings\s+star\s+Wayne\s+Gretzky
+0	Gretzky.+plays\s+for\s+the\s+Kings
+0	Gretzky.+play\s+hockey\s+for\s+the\s+Kings
+0	Gretzky.+for\s+the\s+Los\s+Angeles\s+Kings?
+0	Los\s+Angeles\s+Kings\s+center
+0	Los\s+Angeles\s+Kings.+Gretzky
+0	Gretzky\s+of\s+the\s+(Los\s+Angeles\s+)?Kings
+0	Gretzky\s+scoreless.+Kings
+0	All\s+Gretzky\s+did\s+was\s+jack\s+the\s+Kings\s+up
+0	skated\s+for\s+the\s+Kings
+0	the\s+Kings\s*'?\s+Wayne\s+Gretzky
+0	leads\s+the\s+Kings\s+in\s+goals
+0	teammate\s+at\s+Edmonton
+0	^\s*(the\s+)?Los\s+Angeles\s+Kings\s*$
+0	boss\s*,?\s*Los\s+Angeles\s+Kings\s+owner
+0	Wayne\s+Gretzky\s*,?\s+L\s*\.?\s*A\.?\s+Kings
+0	Team\s+Canada\s+in\s+the.+Canada\s+Cup
+0	good\s+hockey\s+team.+Gretzky\s+said.+Kings
+0	Kings\s*,?\s+the\s+Smythe\s+Division\s+champions
+1	Irises
+1	Sunflowers
+1	sunflowers?
+1	iris(es)?
+1	roses?
+1	foxglove
+1	poppies
+2	spices
+2	spices?
+2	reduces\s+aggression\s+among\s+cows
+2	licorice\s*-?\s*scented\s+fragrance
+2	fragrant\s+herbs
+2	flavor(ed)?
+2	flavoring
+2	anise\s+seeds?
+2	fennel
+2	finocchio
+2	anise\s+extract
+2	^\s*seed\s*$
+2	potent\s+bear\s+bait
+3	kiss
+3	kiss(ing)?
+5	basketball
+5	NCAA
+7	sweet Italian bread
+7	sweet\s+Italian\s+bread
+8	radioactivity
+8	radioactivi?ty
+8	radioactive
+8	radiation
+8	contamination
+8	wastes?
+8	RAO
+8	nuclear.+polluted
+8	tritium
+8	iodine
+8	xenon
+9	Creation of Adam
+9	Creation\s+of\s+Adam
+10	Grecian Formula 16
+10	L\s*'?\s*Oreal
+10	brown\s+tint
+10	Grecian\s+Formula\s+16
+11	lizards
+11	lizards?
+11	missile\s+systems?
+11	systems.+of\s+Russian\s+manufacture
+11	surface\s*-?\s*to\s*-?\s*air
+12	Ted Turner
+12	Turner
+13	Bill Galbraith
+13	Galbraith
+13	Asprey
+13	Worshipful\s+Company\s+of\s+Clockmakers
+14	South America
+14	South\s+America
+15	severe form of anaemia
+15	severe\s+blood\s+anemia
+15	blood\s+disorders?
+15	inherited\s+disorders?
+15	disorder.*genetic\s+defect
+15	genetic\s+disorders?
+15	genetic\s+defects?
+15	genetic\s+defect.*blood
+15	lack.*gene.*hemoglobin
+17	493
+18	Bethel, Sullivan County
+18	N.Y.
+18	Bethel
+18	Yasgur\s*'?s?\s+farm
+18	in\s+upstate\s+New\s+York
+18	^\s*N\.Y\.\s*$
+18	New\s+York\s+from\s+Aug\.\s+15\s*-\s*17
+18	northwest\s+of\s+New\s+York\s+City
+18	New\s+York\s+State
+19	American artist
+19	^\s*American\s*$
+19	American.*art.*Pollock
+19	character\s+of\s+American\s+art
+19	American\s+artists?
+19	Pollock\s*:?\s+An\s+American
+19	An\s+American\s+Saga
+19	contemporary\s+painter\s+in\s+America
+19	an\s+American\s+art\s+scene
+19	greatest\s+painter\s+in\s+America
+19	born\s+in\s+rural\s+Georgia
+19	Milledgeville\s*,?\s*Ga
+20	Lexington
+21	Christie Brinkley
+21	Brinkley
+22	11 million
+22	10,777,514
+24	South America
+24	South\s+American?
+26	Cincinnati
+26	Ohio-based
+28	squamous cell carcinoma
+28	basal\s*-?\s*cells?
+29	1936
+29	1930
+29	1930s
+30	William Gibson
+30	Gibson
+31	cardiopulmonary resuscitation
+31	cardio\s*-?\s*pulmonary\s+resuscitation
+34	naphthenic and palmitic acids
+35	Cable News Network
+35	Cable\s+News\s+Network
+36	James Boswell
+36	Boswell
+37	Pacific Bell
+37	GTE\s+of\s+California
+37	GTE\s*-?\s*California
+37	Pacific\s+Bell
+39	guitar
+39	guitars?
+39	guitarist
+40	Pianist
+40	music\s+by
+40	pianists?
+40	professor
+41	Sam Walton
+41	Walton
+43	Parents Just Don't Understand
+43	Parents\s+Just\s+Don\s*'?\s*t\s+Understand
+45	actor
+45	played\s+opposite\s+Cher
+45	played\s+by
+45	he\s+plays
+45	Actors?
+45	film\s+stars?
+45	Hollywood.*stars?
+45	Hollywood.*starring
+45	movie\s+roles?
+45	movie\s+starring
+45	motion\s+pictures?
+46	Pharos Lighthouse
+46	pyramids?
+46	hanging\s+gardens?
+46	Pharos\s+Lighthouse
+46	temple\s+of\s+Zeus
+47	Pittsburg Pirates Baseball Team
+47	Pirates?
+48	Parkinson's disease
+48	Parkinson(ism)?
+49	Western Europe
+49	Western\s+Europe
+50	Leprechaun
+51	cancer
+51	brain\s+tumor
+52	Clifford Stoll
+52	Stoll
+53	Spencer Christian
+53	Christian
+53	McNiff
+54	Alef-Beyz
+54	Alef\s*-?\s*Beyz
+55	mountains
+55	mountains?
+56	Carnival Cruise Lines Inc.
+56	Carnival
+57	Jwaneng mine
+57	on the fringes of the Kalahari desert in Botswana
+57	Northwest\s+Territories
+57	South\s+African?
+57	Angolan?
+57	Namibian?
+57	Arkansas
+57	North\s+America
+57	Australia
+57	Australian\s+diamond\s+mining
+57	diamond\s+mine\s+in\s+Africa
+57	Venetia
+57	Zimbabwe
+57	Botswana
+57	Kalgoorlie
+57	Sierra\s+Leone
+57	Ghana
+57	Mafikeng
+57	River\s+Ranch
+57	Argyle\s+diamond\s+mine
+57	in\s+about\s+20\s+countries
+57	Soviet\s+Union
+57	Russian?
+57	diamond\s+finds\s+in\s+the\s+US
+57	Cuango
+58	K-Mart
+58	K\s*-?\s*mart
+62	Henson
+63	hazardous materials
+63	hazardous\s+materials?
+65	nine
+65	^\s*9\s*$
+65	^\s*nine\s*$
+65	nine\s+months
+66	Coliseum
+68	Rice Krispies
+68	Rice\s+Krispies
+69	school teacher Franz Gruber
+69	Mohr
+69	Gruber
+70	1945
+72	Luke
+72	Luke Skywalker
+72	Skywalker
+73	Joe Penny
+73	Penny
+74	The Netherlands
+74	Holland
+74	in\s+Europe
+74	the Netherlands
+74	^\s*Netherlands\s*$
+74	Amsterdam\s*,?\s*Netherlands
+75	Gettysburg National Military Park
+75	Gettysburg
+75	Antietam
+75	Manassas
+75	Fredericksburg
+75	Appomatox
+75	Bull\s+Run
+76	Mount Rushmore
+76	Rushmore
+76	carve.*mountain
+76	carve.*granite\s+peak
+77	March 9, 1959
+77	1959
+78	freak storm in 1952
+78	freak\s+storm
+79	94537
+79	94539
+79	94538
+79	94536
+79	94555
+80	Irish
+80	Irish\s*,?\s*or\s+Gaelic
+80	^\s*Irish\s*$
+80	Irish\s+language
+80	Irish\s+folk\s+music
+80	Irish\s+yiddish
+80	Gaelic\s*,?\s*Irish
+80	Irish\s+Gaelic
+80	Irish.+study.+their\s+language
+81	directors
+81	film.+directors?
+82	The Wild Dunes resort
+82	Jungle\s+Golf
+82	Wild\s+Dunes
+83	1770
+84	Jodie Foster
+84	Foster
+86	NutraSweet
+86	monsantos aspartame
+86	Nutra\s*-?\s*Sweet
+87	N.Y.
+87	Falls\s*,?\s+N\.?\s*Y\.?
+87	^\s*New\s+York\s*$
+87	New\s+York.+Niagara
+87	Niagara\s+Falls\s*,?\s+in\s+New\s+York\s+state
+88	South America
+88	South\s+America
+89	Madonna Louise Veronica Ciccone
+89	Ciccone
+90	Friday Nov. 30
+90	30\s+November
+90	November\s+30
+91	Harley Davidson
+91	Harley
+91	Honda.+motorcycles?
+91	motorcycl.+Honda
+91	Indian\s+Motocycle\s+Manufacturing\s+Co
+92	Who's The Boss
+92	Who\s*'?\s*s\s+the\s+Boss
+93	Yamaguchi
+93	Debi\s+Thomas
+93	Katarina\s+Witt
+93	Elizabeth\s+Manley
+93	Tonya\s+Harding
+93	Claudia\s+Leistner
+93	Trenary
+93	Rodnina
+93	Ito
+93	Linda\s+Fratianne
+93	Tiffany\s+Chin
+93	Healy
+93	Peggy\s+Fleming
+93	Rosalyn\s+Sumners
+93	Surya\s+Bonaly
+93	Nancy\s+Kerrigan
+94	Varivax
+95	Simba
+99	1920
+100	London-born primatologist
+100	naturalist
+100	expert\s+on\s+chimps
+100	chimpanzee\s+specialist
+100	chimpanzee\s+researcher
+100	chimpanzee\s*-?\s*observer
+100	pioneered.*study\s+of\s+primates
+100	anthropologist
+100	ethnologist
+100	ethologists?
+100	primatologist
+100	animal\s+behaviorist
+100	scientist\s+of\s+unquestionable\s+reputation
+100	most\s+recognizable\s+living\s+scientist
+100	wife.*van\s*Lawick
+101	Princeton
+102	Alberta
+103	Jolt Co. introduced a cola
+103	Jolt
+104	1985
+105	fruit
+105	fruit.+pomegranates?
+105	pomegranate.+fruits?
+106	Elizabeth II
+106	Elizabeth\s+II
+106	Elizabeth\s+the\s+second
+106	Queen\s+Elizabeth
+108	Sheriff Pat Garrett
+108	Garrett
+109	Don Henley
+111	New Zealand
+111	^\s*David\s+Kirk\s*$
+111	Kirk\s*,?\s+the\s+All\s+Black
+111	All\s+Black.+1987\s+world\s+cup\s+winners?
+111	^\s*New\s+Zealand\s*$
+111	New\s+Zealand\s+won\s+the\s+first\s+world\s+cup
+112	1976
+112	1980
+113	East of Eden
+113	The Grapes of Wrath
+113	Grapes\s+of\s+Wrath
+113	In\s+Dubious\s+Battle
+113	East\s+of\s+Eden
+113	The\s+Pearl
+113	Of\s+Mice\s+and\s+Men
+113	Red\s+Pony
+113	Cannery\s+Row
+114	Dr. Seuss
+114	Seuss
+114	Suess
+114	Geisel
+115	Pleasant Co.
+115	Pleasant
+116	1948
+116	1970's
+117	LAX
