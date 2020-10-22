@@ -2,26 +2,27 @@ import numpy as np
 import glob
 import re
 import os
+import xmltodict
+import io
 
 
 """
-    getData(path) returns a list of strings where each string is .txt files in a given path
+    getData(path) returns a list of strings where each string is .txt or xml file in a given path
     Input : path -> the directory from where the .txt files are read
-    Outout : data -> list of strings
+            type -> 0 if we are parsing .txt 1 if we are parsing xml
+    Output : data -> list of strings of a txt or xml depending on type argumnet
 """
-def getData(path):
-    files = glob.glob(os.path.join(os.getcwd(), path, "*.txt"))
+def getData(path, type):
+    files = glob.glob(os.path.join(os.getcwd(), path, "*"))
     data = []
     for file in files:
-        with open(file) as text:
-            data.append(text.read().lower()) # this converts data to lower case
+        if type == 0:
+            with open(file) as text:
+                data.append(text.read().lower()) # this converts data to lower case
+        else:
+            with io.open(file,'r',encoding = "ISO-8859-1") as f:
+                data.append(f.read().lower())
     return data
-
-
-def getXmlData(path):
-    data = []
-    return data
-
 
 """
     parseQuestions(data) returns a dictionary of questions as keys and their numbers as values
@@ -52,17 +53,27 @@ def parseRelevantDocs(data):
 
 
 """
-    parseTopDocs(data) returns a dictionary of topdoc ids as keys and the topdoc string as the value
-    Input : data -> list of the topdoc strings for each .txt file in topdocs
-    Outout : topdoc_dict -> dictionary of key integer topdoc id and value string topdoc
+    parseTopDocs(data) returns a dictionary of questions numbers as keys and the topdoc id as the value
+    Input : data -> the string that maps question number to topdoc id
+    Outout : xml_dict -> dictionary of key TopDoc integer id number and value string xml doc
 """
 def parseTopDocs(data):
-    for datum in data:
-        print(datum)
+    # xml_dict = xmltodict.parse(data[0])
+    # print(xml_dict)
     return
 
 
-data = getData("training/qadata/")
+
+
+
+
+
+
+
+data = getData("training/qadata/", 0)
 question_dict = parseQuestions(data[0])
+# print(data[0])
 id_dict = parseRelevantDocs(data[1])
-topdoc_data = getXmlData("training/topdocs/")
+topdoc_data = getData("training/topdocs/", 1)
+# print(topdoc_data[0])
+# parseTopDocs(topdoc_data)
