@@ -103,6 +103,7 @@ def normalizedWordFrequencyMatrix(corpus, X):
     for i in range(len(X)):
         for j in range(len(X[0])):
             X[i][j] = X[i][j]/len(corpus[i])
+            Y[i][j] = 1 if x[i][j] > 0 else 0
     return X,Y
 
 
