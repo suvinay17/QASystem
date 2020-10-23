@@ -83,27 +83,28 @@ def cosineSimilarity(X, Y):
 """
     corpusCounts(corpus) returns the counts of each token in every chunk of the corpus.
     Input: corpus -> List of chunks (sentences) from the corpus
-    Output: X -> 2d array of counts for each token in a chunk
+    Output: X -> 2d numpy array of counts for each token in a chunk
 """
 def corpusCounts(corpus):
     vectorizer = CountVectorizer()
     X = vectorizer.fit_transform(corpus)
     #print(vectorizer.get_feature_names())
-    return X.toarray() #change back to just X for sparse matrix
+    return X.toarray() #change back to just X for sparse matrix, this converts is to numpy array
 
 
 """
     corpusCounts(corpus) returns the normalizedWordFrequency of each token for each chunk : count/ size of sentence as X, and binary counts for each token in a chunk as Y
-    Input: corpus -> List of chunks (sentences) from the corpus, X
+    Input: corpus -> List of chunks (sentences) from the corpus, X [This sentence is the one after removing stopwords]
     Output: X -> 2d array with normalizedWordFrequency for each token in a chunk (feature matrix)
             Y -> 2d array of binary counts for each token in a chunk. (feature matrix)
 """
 def normalizedWordFrequencyMatrix(corpus, X):
-    Y = [[0]*len(X[0])]*len(X) #Might Change X, Y to Numpy Arrays
+    X = X.astype('float64')
+    Y = np.zeros((len(X),len(X[0])))
     for i in range(len(X)):
-        c = len(word_tokenize(corpus[i]))
+        c = float(len(word_tokenize(corpus[i]))) # To avoid integer division
         for j in range(len(X[0])):
-            X[i][j] = X[i][j]/c
+            X[i][j] = float(X[i][j]) / c # To avoid integer division
             Y[i][j] = 1 if X[i][j] > 0 else 0
     return X,Y
 
@@ -133,6 +134,6 @@ corpus = [
 topdoc_data = getData("training/topdocs/", 1)
 X = corpusCounts(corpus)
 A,B = normalizedWordFrequencyMatrix(corpus, X)
-print(B)
+print(A)
 # print(topdoc_data[0])
 # parseTopDocs(topdoc_data)
