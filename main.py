@@ -51,29 +51,65 @@ def parseRelevantDocs(data):
         id_dict[temp[0]] = temp[1]
     return id_dict
 
+def genXMLListFromTopDocs(doclist):
+    # iterate through each line of doclist. if you see <docno>, get the id between <docno> and </docno>. save it as a variable you're
+    # going to use as a key for your hashmap. keep going until you hit a <text> tag. initialize a buffer, and store everything that occurs
+    # until an </text> tag. Use regex r"<.+>" to catch all xml tags in the buffer, and sub them with an empty string. Put the resultant text as hashmap val
+    # to the key.
+    texts = []
+    buffer = ""
+    bufflag = False # track whether buffer is being filled or not
+    for line in doclist.splitlines():
+        if line[:3] == "qid":
+            texts.append(buffer)
+            buffer = ""
+            bufflag = False
+            continue
+
+        if line[:5] == "<doc>":
+            bufflag = True
+
+        if bufflag:
+            buffer += "\n"+line
+
+        if line[:6] == "</doc>":
+            bufflag = False
+
+    print(texts[34])
+    dict = xmltodict.parse(texts[34])
+    print(dict)
+    # for i, s in enumerate(texts[1:]):
+    #     dict = xmltodict.parse(s)
+    #     print(i)
+
+
+
+
+    return
 
 """
     parseTopDocs(data) returns a dictionary of questions numbers as keys and the topdoc id as the value
     Input : data -> the string that maps question number to topdoc id
-    Outout : xml_dict -> dictionary of key TopDoc integer id number and value string xml doc
+    Output : xml_dict -> dictionary of key TopDoc integer id number and value string xml doc
 """
 def parseTopDocs(data):
+
     # xml_dict = xmltodict.parse(data[0])
     # print(xml_dict)
     return
 
-
-
-
-
-
-
-
+################################################################################
 
 data = getData("training/qadata/", 0)
-question_dict = parseQuestions(data[0])
+question_dict = parseQuestions(data[1])
 # print(data[0])
-id_dict = parseRelevantDocs(data[1])
+# print(data[1])
+# print(data[2])
+id_dict = parseRelevantDocs(data[2])
+
 topdoc_data = getData("training/topdocs/", 1)
+
 # print(topdoc_data[0])
-# parseTopDocs(topdoc_data)
+
+genXMLListFromTopDocs(topdoc_data[2])
+# print(topdoc_data[2][:200])
