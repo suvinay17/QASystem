@@ -1,5 +1,5 @@
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 #nltk.download('stopwords') if stop words not downloaded already
@@ -81,12 +81,13 @@ def cosineSimilarity(X, Y):
 
 
 """
-    corpusCounts(corpus) returns the counts of each token in every chunk of the corpus.
+    corpusCounts(corpus) returns the counts of each token in every chunk of the corpus for type = 0, for type = 1 returns tf idf feature matrix
     Input: corpus -> List of chunks (sentences) from the corpus
-    Output: X -> 2d numpy array of counts for each token in a chunk
+           type   -> determines whether to do CountVectorizer or TfidfVectorizer
+    Output: X -> 2d numpy array of counts for each token in a chunk if type = 0 else tf idf feature matrix
 """
-def corpusCounts(corpus):
-    vectorizer = CountVectorizer()
+def corpusCounts(corpus, type):
+    vectorizer = CountVectorizer() if type == 0 else TfidfVectorizer()
     X = vectorizer.fit_transform(corpus)
     #print(vectorizer.get_feature_names())
     return X.toarray() #change back to just X for sparse matrix, this converts is to numpy array
@@ -132,8 +133,9 @@ corpus = [
 'And this is the third one.',
 'Is this the first document?']
 topdoc_data = getData("training/topdocs/", 1)
-X = corpusCounts(corpus)
+X = corpusCounts(corpus, 0)
 A,B = normalizedWordFrequencyMatrix(corpus, X)
-print(A)
+Z = corpusCounts(corpus, 1)
+
 # print(topdoc_data[0])
 # parseTopDocs(topdoc_data)
