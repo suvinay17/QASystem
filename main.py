@@ -9,6 +9,7 @@ import re
 import os
 import xmltodict
 import io
+import heapq
 
 
 """
@@ -86,8 +87,11 @@ def cosineSimilarity(X, Y):
            type   -> determines whether to do CountVectorizer or TfidfVectorizer
     Output: X -> 2d numpy array of counts for each token in a chunk if type = 0 else tf idf feature matrix
 """
-def corpusCounts(corpus, type):
-    vectorizer = CountVectorizer() if type == 0 else TfidfVectorizer()
+def corpusCounts(corpus, type, second_type = 0, vocab = {}):
+    if second_type == 0:
+        vectorizer = CountVectorizer() if type == 0 else TfidfVectorizer()
+    else:
+        vectorizer = CountVectorizer(vocabulary = vocab) if type == 0 else TfidfVectorizer(vocabulary = vocab)
     X = vectorizer.fit_transform(corpus)
     #print(vectorizer.get_feature_names())
     return X.toarray() #change back to just X for sparse matrix, this converts is to numpy array
@@ -122,6 +126,41 @@ def removeStopWords(sentence):
     return filtered_sentence
 
 
+# def getTopSimilar(question_dict, id_dict, topdoc_data):
+#     question_list = []
+#     similarity_dict = {}
+#     id = 0
+#     answer_section = [[]]*len(question_dict)
+#     for k,v in question_dict:
+#         question_list.append(k)
+#         for answer in topdoc_data[v]:
+#             answer_section[id].append(answer)
+#         id = id + 1
+#     vocab = buildVocab(question_list)
+#     V = corpusCounts(question_list, 0)
+#     V,W = normalizedWordFrequencyMatrix(question_list, V, vocab)
+#     X = corpusCounts(question_list, 0)
+#     for i in range(len(question_list)):
+#         X,Y = normalizedWordFrequencyMatrix(answer_section[i], X, vocab)
+#         for j in range(len(answer_section[i])):
+#             s = question_list[i] + "," + answer_section[j]
+#             similarity_dict[s] = cosineSimilarity( V[i], X[j])[0][0]
+#         print(heapq.nlargest(10, similarity_dict.keys(), key = similarity_dict.get)) #Priority queue for top 10 answers, send this to write to file
+
+
+
+
+
+def buildVocab(question_list):
+    vocab = {}
+    for question in question_list:
+        for token in word_tokenize(question):
+            vocab[token] = 1
+
+
+
+
+
 data = getData("training/qadata/", 0)
 question_dict = parseQuestions(data[0])
 # print(data[0])
@@ -133,9 +172,7 @@ corpus = [
 'And this is the third one.',
 'Is this the first document?']
 topdoc_data = getData("training/topdocs/", 1)
-X = corpusCounts(corpus, 0)
-A,B = normalizedWordFrequencyMatrix(corpus, X)
-Z = corpusCounts(corpus, 1)
+# getTopSimilar(question_dict, id_dict, topdoc_data)
 
 # print(topdoc_data[0])
 # parseTopDocs(topdoc_data)
