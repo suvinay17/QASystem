@@ -150,15 +150,33 @@ def removeStopWords(sentence):
 
 
 
-
+"""
+    buildVocab(question_list) goes through all questions to build vocabulary out of questions, this will be used to make the feature matrix
+    Input: question_list -> list of questions(strings)
+    Output: vocab -> a dictionary of all unique question tokens
+"""
 def buildVocab(question_list):
-    vocab = {}
+    vocab = {} # Using dict instead of set because CountVectorizer only takes dictionary as parameter
     for question in question_list:
         for token in word_tokenize(question):
             vocab[token] = 1
+    return vocab
 
 
-
+"""
+    writeToFile(question_list, question_dict, answer_list, file_name) creates new file with the prediction results
+    Input: question_list -> The list of all questions
+           question_dict -> Dictionary that Maps each question to its number
+           answer_list -> List of lists where each list_i inside the list refers to the answers to question_i
+           file_name -> This specifies what the prediciton file should be called
+    Output: Creates a file with the answer patterns
+"""
+def writeToFile(question_list, question_dict, answer_list, file_name): #answer_list is a list of lists
+    file = open(file_name, "w")
+    for i in range(len(question_list)):
+        file.write("qid "+id_dict.get(question_list[i])+"\n")
+        for answer in answer_list[i]:
+            file.write(answer+"\n")
 
 
 data = getData("training/qadata/", 0)
@@ -172,6 +190,7 @@ corpus = [
 'And this is the third one.',
 'Is this the first document?']
 topdoc_data = getData("training/topdocs/", 1)
+#writeToFile(["Who are you?", "What do you want?","Do you mean what I love?"],question_dict, [["ans1","ans2"], ["ans3","ans4"], ["one"]])
 # getTopSimilar(question_dict, id_dict, topdoc_data)
 
 # print(topdoc_data[0])
