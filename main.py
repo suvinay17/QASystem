@@ -4,6 +4,7 @@ from nltk.tag import pos_tag
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
 #nltk.download('stopwords') if stop words not downloaded already
 # nltk.download('averaged_perceptron_tagger')
 #nltk.download('wordnet')
@@ -28,7 +29,7 @@ def getData(path, type):
     for file in files:
         if type == 0:
             with open(file) as text:
-                data.append(lemmatize(text.read().lower())) # this converts data to lower case and lemmatizes it
+                data.append(text.read().lower()) # this converts data to lower case and lemmatizes it
         else:
             with io.open(file,'r',encoding = "ISO-8859-1") as f:
                 data.append(f.read().lower()) # lemmatize answers later.
@@ -358,19 +359,26 @@ def categorizeQuestion(question):
 """
 def lemmatize(sent_chunk):
     lemmatizer = WordNetLemmatizer()
-    s = ""
-    for word in word_tokenize(sent_chunk):
-        s = s + lemmatizer.lemmatize(word) + " "
-    return s.strip()
+    print(" ".join([lemmatizer.lemmatize(wd, get_word_net(wd)) for wd in word_tokenize(sent_chunk)]))
+    return
 
 
 def addPosTags(text):
     text = word_tokenize(text)
     text_with_tags = pos_tag(text) # List of tuples, access POS tag
-    print(text_with_tags)
+    return text_with_tags
 
 def getWindowList(text, type):
     return
+
+def get_word_net(word):
+# Citation : https://www.machinelearningplus.com/nlp/lemmatization-examples-python/
+    tag = pos_tag([word])[0][1][0].upper()
+    tag_dict = {"J": wordnet.ADJ,
+                "N": wordnet.NOUN,
+                "V": wordnet.VERB,
+                "R": wordnet.ADV}
+    return tag_dict.get(tag, wordnet.NOUN)
 
 
 
@@ -382,17 +390,16 @@ def getWindowList(text, type):
 
 
 data = getData("training/qadata/", 0)
-question_dict = parseQuestions(data[1])
-
-id_dict = parseRelevantDocs(data[2])
-
+question_dict = parseQuestions(data[0])
+id_dict = parseRelevantDocs(data[1])
 corpus = [
 'This is the first document.',
 'This document is the second document.',
 'And this is the third one.',
 'Is this the first document?']
 topdoc_data = getData("training/topdocs/", 1)
-addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth ")
+addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth eats eated fast fasted ; s 123 what's ")
+lemmatize("walked walk walks hear heard hears serve served service go went gone")
 #writeToFile(["Who are you?", "What do you want?","Do you mean what I love?"],question_dict, [["ans1","ans2"], ["ans3","ans4"], ["one"]])
 # getTopSimilar(question_dict, id_dict, topdoc_data)
 
