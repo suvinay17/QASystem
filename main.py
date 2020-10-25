@@ -1,8 +1,12 @@
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from nltk.tag import pos_tag
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 #nltk.download('stopwords') if stop words not downloaded already
+# nltk.download('averaged_perceptron_tagger')
+#nltk.download('wordnet')
 import numpy as np
 import glob
 import re
@@ -24,10 +28,10 @@ def getData(path, type):
     for file in files:
         if type == 0:
             with open(file) as text:
-                data.append(text.read().lower()) # this converts data to lower case
+                data.append(lemmatize(text.read().lower())) # this converts data to lower case and lemmatizes it
         else:
             with io.open(file,'r',encoding = "ISO-8859-1") as f:
-                data.append(f.read().lower())
+                data.append(f.read().lower()) # lemmatize answers later.
     return data
 
 """
@@ -38,7 +42,7 @@ def getData(path, type):
 def parseQuestions(data):
     lines = data.splitlines()
     question_dict = {}
-    for i in range(0, len(lines), 3):
+    for i in range(0, len(lines)-1, 3):
         temp = lines[i].split()
         question_dict[lines[i+1]] = temp[1]
     return question_dict
@@ -179,6 +183,60 @@ def writeToFile(question_list, question_dict, answer_list, file_name): #answer_l
             file.write(answer+"\n")
 
 
+def categorizeQuestion(question):
+    for word in word_tokenize(question):
+        if word == "who": #see if this needs to be made lower
+            return "NN"
+        elif word == "where":
+            return "NNP"
+        elif word == "when":
+            return "CD"
+        elif word == "tell":
+            return 3
+        elif word == "how":
+            return 4
+        elif word == "name":
+            return 5
+        elif word == "for":
+            return 6
+        elif word == "in":
+            return 7
+        elif word == "can":
+            return 8
+        else:
+            return -1
+
+
+"""
+    lemmatize(sent_chunk) takes in a sentence, tokenizes it and then lemmatize each word and returns the sentence with all words lemmatized
+    Input: setn_chunk -> a sentence or a string chunk with words that are not lemmatized
+    Output: a sentence or a string chunk with words that are lemmatized
+"""
+def lemmatize(sent_chunk):
+    lemmatizer = WordNetLemmatizer()
+    s = ""
+    for word in word_tokenize(sent_chunk):
+        s = s + lemmatizer.lemmatize(word) + " "
+    return s.strip()
+
+
+def addPosTags(text):
+    text = word_tokenize(text)
+    text_with_tags = pos_tag(text) # List of tuples, access POS tag
+    print(text_with_tags)
+
+def getWindowList(text, type):
+    return
+
+
+
+
+
+
+
+
+
+
 data = getData("training/qadata/", 0)
 question_dict = parseQuestions(data[0])
 # print(data[0])
@@ -190,6 +248,7 @@ corpus = [
 'And this is the third one.',
 'Is this the first document?']
 topdoc_data = getData("training/topdocs/", 1)
+addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth ")
 #writeToFile(["Who are you?", "What do you want?","Do you mean what I love?"],question_dict, [["ans1","ans2"], ["ans3","ans4"], ["one"]])
 # getTopSimilar(question_dict, id_dict, topdoc_data)
 
