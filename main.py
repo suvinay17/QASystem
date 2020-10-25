@@ -95,6 +95,7 @@ def genXMLListFromTopDocs(doclist):
 
     return dict(zip(docnos, texts))
 
+
     # texts = []
     # buffer = ""
     # bufflag = False # track whether buffer is being filled or not
@@ -390,3 +391,10 @@ corpus = [
 'This document is the second document.',
 'And this is the third one.',
 'Is this the first document?']
+topdoc_data = getData("training/topdocs/", 1)
+addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth ")
+#writeToFile(["Who are you?", "What do you want?","Do you mean what I love?"],question_dict, [["ans1","ans2"], ["ans3","ans4"], ["one"]])
+# getTopSimilar(question_dict, id_dict, topdoc_data)
+
+# print(topdoc_data[0])
+# parseTopDocs(topdoc_data)
