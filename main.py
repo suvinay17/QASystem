@@ -5,6 +5,7 @@ import os
 import xmltodict
 import io
 
+# enddocnore = re.compile(r"<docno> ?(.*) ?<\docno>")
 
 """
     getData(path) returns a list of strings where each string is .txt or xml file in a given path
@@ -56,33 +57,62 @@ def genXMLListFromTopDocs(doclist):
     # going to use as a key for your hashmap. keep going until you hit a <text> tag. initialize a buffer, and store everything that occurs
     # until an </text> tag. Use regex r"<.+>" to catch all xml tags in the buffer, and sub them with an empty string. Put the resultant text as hashmap val
     # to the key.
+    docnos = []
     texts = []
-    buffer = ""
-    bufflag = False # track whether buffer is being filled or not
-    for line in doclist.splitlines():
-        if line[:3] == "qid":
-            texts.append(buffer)
-            buffer = ""
-            bufflag = False
-            continue
+    tokens = re.split(r"[ \t\n]", doclist)
+    REPLACE_DOCNO = re.compile(r"</docno>")
+    REPLACE_TAG = re.compile(r"<[\/a-z]+>")
+    buf = ""
+    fillbuf = False
+    for i in range(len(tokens)):
+        if tokens[i] == "<docno>":
+            docnos.append(tokens[min(i+1, len(tokens)-1)])
+            fillbuf = True
 
-        if line[:5] == "<doc>":
-            bufflag = True
+        elif len(tokens[i]) > 7 and tokens[i][:7] == "<docno>":
+            docnos.append(REPLACE_DOCNO.sub("",tokens[i][7:]))
 
-        if bufflag:
-            buffer += "\n"+line
-
-        if line[:6] == "</doc>":
-            bufflag = False
-
-    print(texts[34])
-    dict = xmltodict.parse(texts[34])
-    print(dict)
-    # for i, s in enumerate(texts[1:]):
-    #     dict = xmltodict.parse(s)
-    #     print(i)
+        if fillbuf:
+            # buf += REPLACE_TAG.sub("", tokens[i]) + " "
+            buf += tokens[i]+" "
 
 
+        if len(tokens[i]) > 1 and tokens[i][0] == "<" and tokens[i] == "</doc>":
+            texts.append(buf)
+            buf = ""
+            fillbuf = False
+
+    [print(t[:2000], "\n---") for t in texts]
+
+    # return dict(zip(docnos, texts))
+
+    # texts = []
+    # buffer = ""
+    # bufflag = False # track whether buffer is being filled or not
+    # for line in doclist.splitlines():
+    #     if line[:3] == "qid":
+    #         texts.append(buffer)
+    #         buffer = ""
+    #         bufflag = False
+    #         continue
+    #
+    #     if line[:5] == "<doc>":
+    #         bufflag = True
+    #
+    #     if bufflag:
+    #         buffer += "\n"+line
+    #
+    #     if line[:6] == "</doc>":
+    #         bufflag = False
+    #
+    # print(texts[34])
+    # dict = xmltodict.parse(texts[34])
+    # print(dict)
+    # # for i, s in enumerate(texts[1:]):
+    # #     dict = xmltodict.parse(s)
+    # #     print(i)
+    #
+    #
 
 
     return
@@ -109,7 +139,10 @@ id_dict = parseRelevantDocs(data[2])
 
 topdoc_data = getData("training/topdocs/", 1)
 
-# print(topdoc_data[0])
+# print(topdoc_data[4])
 
-genXMLListFromTopDocs(topdoc_data[2])
-# print(topdoc_data[2][:200])
+a = genXMLListFromTopDocs(topdoc_data[4])
+
+# for k in a:
+#     print(len(a))
+#     print(k, "::", a[k][:1000])
