@@ -71,10 +71,11 @@ def genXMLListFromTopDocs(doclist):
 
         elif len(tokens[i]) > 7 and tokens[i][:7] == "<docno>":
             docnos.append(REPLACE_DOCNO.sub("",tokens[i][7:]))
+            fillbuf = True
 
         if fillbuf:
-            # buf += REPLACE_TAG.sub("", tokens[i]) + " "
-            buf += tokens[i]+" "
+            buf += REPLACE_TAG.sub("", tokens[i]) + " "
+            # buf += tokens[i]+" "
 
 
         if len(tokens[i]) > 1 and tokens[i][0] == "<" and tokens[i] == "</doc>":
@@ -82,9 +83,7 @@ def genXMLListFromTopDocs(doclist):
             buf = ""
             fillbuf = False
 
-    [print(t[:2000], "\n---") for t in texts]
-
-    # return dict(zip(docnos, texts))
+    return dict(zip(docnos, texts))
 
     # texts = []
     # buffer = ""
@@ -139,10 +138,8 @@ id_dict = parseRelevantDocs(data[2])
 
 topdoc_data = getData("training/topdocs/", 1)
 
-# print(topdoc_data[4])
+print(topdoc_data[45])
 
-a = genXMLListFromTopDocs(topdoc_data[4])
+# a = genXMLListFromTopDocs(topdoc_data[45])
 
-# for k in a:
-#     print(len(a))
-#     print(k, "::", a[k][:1000])
+# print(a.keys())
