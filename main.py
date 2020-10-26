@@ -52,10 +52,6 @@ class W2V:
 
         return out
 
-    '''getSimilarity(v1, v2) returns the cosine similarity between the two provided word vectors'''
-    def getSimilarity(self, v1, v2):
-        return nd.dot(v1, v2)
-
 
 
 """
