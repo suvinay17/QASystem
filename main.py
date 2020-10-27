@@ -1,4 +1,4 @@
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from nltk.tag import pos_tag
 from nltk.corpus import stopwords
@@ -125,7 +125,7 @@ def parseTopDocs(data):
            type   -> determines whether to do CountVectorizer or TfidfVectorizer
     Output: X -> 2d numpy array of counts for each token in a chunk if type = 0 else tf idf feature matrix
 """
-def corpusCounts(corpus, type, second_type = 0, vocab = {}):
+def corpusCounts(corpus, type = 0, second_type = 1, vocab = {}):
     if second_type == 0:
         vectorizer = CountVectorizer() if type == 0 else TfidfVectorizer()
     else:
@@ -160,8 +160,8 @@ def normalizedWordFrequencyMatrix(corpus, X):
 def removeStopWords(sentence):
     stop_words = set(stopwords.words('english'))
     word_tokens = word_tokenize(sentence)
-    filtered_sentence = [w for w in word_tokens if not w in stop_words]
-    return filtered_sentence
+    return " ".join([w for w in word_tokens if not w in stop_words])
+
 
 
 """
@@ -172,33 +172,43 @@ def removeStopWords(sentence):
 def cosineSimilarity(X, Y):
     X = X.reshape(1,-1)
     Y = Y.reshape(1,-1)
-    return cosine_similarity(X, Y) # note this is a 2d array, but will have only one value
+    return cosine_similarity(X, Y)[0][0] # note this is a 2d array, but will have only one value
 
 
-def getTopSimilar(question_dict, id_dict, topdoc_data):
+def getTopSimilar(question_dict, id_dict, topdoc_data, stopw_lemmatize = 1, fm_type = 0, nwf_or_bow = 0):
     question_list = []
     similarity_dict = {}
     id = 0
     answer_section = [[]]*len(question_dict)
 
     for k,v in question_dict.items():
-        question_list.append(k)
+        if stopw_lemmatize == 1
+            question_list.append(lemmatize(removeStopWords(k)))
+        else
+            question_list.append(k))
         for sent_chunk in topdoc_data[id_dict[v]]:
-            answer_section[id].append(sent_chunk)
+            if stopw_lemmatize == 1:
+                answer_section[id].append(lemmatize(removeStopWords(sent_chunk)))
+            else:
+                answer_section[id].append(sent_chunk)
         id = id + 1
+
     vocab = buildVocab(question_list)
+
     V = corpusCounts(question_list, 0, 1, vocab)
-    V,W = normalizedWordFrequencyMatrix(question_list, V)
+    if fm_type == 0:
+        V,W = normalizedWordFrequencyMatrix(question_list, V)
 
     result = [[]]
     for i in range(len(question_list)):
         X = corpusCounts(answer_section[i], 0, 1, vocab)
+
         X,Y = normalizedWordFrequencyMatrix(answer_section[i], X)
         #print("ans sec", len(answer_section[i]), answer_section[i][0])
         for j in range(len(answer_section[i])):
             s = question_list[i] + "," + answer_section[i][j]
             #print("V", V.shape)
-            similarity_dict[s] = cosineSimilarity( V[i], X[j])[0][0]
+            similarity_dict[s] = cosineSimilarity( V[i], X[j])
         result[i].append(heapq.nlargest(10, similarity_dict.keys(), key = similarity_dict.get)) #Priority queue for top 10 answers, send this to write to file
     return result
 
@@ -271,6 +281,12 @@ def getBertData(question, answer):
     # tokenizer.decode(encoded_input["input_ids"]) to decode features, for debugging
 
 
+def getEuclideanDistance(X, Y):
+    X = X.reshape(1,-1)
+    Y = Y.reshape(1,-1)
+    return euclidean_distances(X,Y)[0][0]
+
+
 data = getData("training/qadata/", 0)
 question_dict = parseQuestions(data[0])
 id_dict = parseRelevantDocs(data[1])
@@ -283,6 +299,9 @@ topdoc_data = getData("training/topdocs/", 1)
 # addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth eats eated fast fasted ; s 123 what's ")
 # lemmatize("walked walk walks hear heard hears serve served service go went gone")
 xml_dict = getXmlDict(topdoc_data)
-getTopSimilar(question_dict, id_dict, xml_dict)
+results = getTopSimilar(question_dict, id_dict, xml_dict)
+
+writeToFile(question_list, question_dict, file_name)
+
 # print(topdoc_data[0])
 # parseTopDocs(topdoc_data)
