@@ -294,14 +294,14 @@ corpus = "Lorem Ipsum is simply dummy text of the printing and typesetting indus
 
 ####################################### TESTING ################################
 
-ner = NERecognizer()
-print(ner.getEntities("Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
-print(ner.getAnsCandidates("who", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
-print(ner.getAnsCandidates("when", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
-print(ner.getAnsCandidates("where", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
-corpus = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-
-wtv = W2V(corpus)
-print(wtv.getAvgWordVec("simply dummy text bruv."))
-print(wtv.getAvgWordVecTokenized(['simply', 'dummy', 'text']))
-print(wtv.getAvgWordVecMat([['simply', 'dummy', 'text'],['Lorem', 'Ipsum'], ['Aldus', 'PageMaker', 'publishing', 'software']]))
+# ner = NERecognizer()
+# print(ner.getEntities("Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+# print(ner.getAnsCandidates("who", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+# print(ner.getAnsCandidates("when", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+# print(ner.getAnsCandidates("where", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+# corpus = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+#
+# wtv = W2V(corpus)
+# print(wtv.getAvgWordVec("simply dummy text bruv."))
+# print(wtv.getAvgWordVecTokenized(['simply', 'dummy', 'text']))
+# print(wtv.getAvgWordVecMat([['simply', 'dummy', 'text'],['Lorem', 'Ipsum'], ['Aldus', 'PageMaker', 'publishing', 'software']]))
