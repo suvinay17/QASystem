@@ -10,6 +10,7 @@ import os
 import io
 import heapq
 import gensim
+import spacy
 
 # enddocnore = re.compile(r"<docno> ?(.*) ?<\docno>")
 
@@ -19,8 +20,10 @@ class W2V:
         Input: corpus -> raw text of training data - e.g: the topdocs and the question training data merged together
         Output: A trained W2V model which can be used to provide word models
     """
-    # scope for improvement: could pre-train the model and store the keyvectors to disk? Or keep it so that it can be trained on the fly for unknown words? Or keep it pretrained and then
+    # scope for improvement:
+    # - could pre-train the model and store the keyvectors to disk? Or keep it so that it can be trained on the fly for unknown words? Or keep it pretrained and then
     # use it for on the fly training if necessary too?
+    # - maybe instead of adding np.zeros add feature vector for unknown word?
     def __init__(self, corpus, minCount = 1):
         sents = sent_tokenize(corpus)
         tokens = [word_tokenize(sent) for sent in sents]
@@ -34,14 +37,14 @@ class W2V:
         words = word_tokenize(sentence)
         sumv = np.zeros(100)
         for w in words:
-            sumv += self.wv[w]
+            sumv += self.wv[w] if w in self.wv else np.zeros(100) # if word in vocab add its feature vector otherwise add 0s
 
         return sumv/len(words)
 
     def getAvgWordVecTokenized(self, sentence):
         sumv = np.zeros(100)
         for w in sentence:
-            sumv += self.wv[w]
+            sumv += self.wv[w] if w in self.wv else np.zeros(100)
 
         return sumv/len(sentence)
 
@@ -52,7 +55,38 @@ class W2V:
 
         return out
 
+class NERecognizer():
+    def __init__(self):
+        self.model = spacy.load("en_core_web_sm")
 
+    def getEntities(self, sent):
+        doc = self.model(sent)
+        entities = {}
+        for e in doc.ents:
+            if e.label_ not in entities:
+                entities[e.label_] = [e.text]
+            else:
+                entities[e.label_].append(e.text)
+
+        return entities
+
+    def getAnsCandidates(self, questionType, answer):
+        entities = self.getEntities(answer)
+        ans_cands = []
+
+        if questionType == "who":
+            ans_cands = entities['PERSON'] if 'PERSON' in entities else []
+
+        elif questionType == "when":
+            ans_cands = entities['DATE'] if 'DATE' in entities else []
+            ans_cands += entities['TIME'] if 'TIME' in entities else []
+
+
+        elif questionType == "where":
+            ans_cands = entities['GPE'] if 'GPE' in entities else []
+            ans_cands += entities['LOC'] if 'LOC' in entities else []
+
+        return ans_cands
 
 """
     getData(path) returns a list of strings where each string is .txt or xml file in a given path
@@ -134,17 +168,6 @@ def genXMLListFromTopDocs(doclist):
 
     return dict(zip(docnos, texts))
 
-"""
-    parseTopDocs(data) returns a dictionary of questions numbers as keys and the topdoc id as the value
-    Input : data -> the string that maps question number to topdoc id
-    Output : xml_dict -> dictionary of key TopDoc integer id number and value string xml doc
-"""
-def parseTopDocs(data):
-
-    # xml_dict = xmltodict.parse(data[0])
-    # print(xml_dict)
-    return
-
 ################################################################################
 
 """
@@ -156,84 +179,6 @@ def cosineSimilarity(X, Y):
     X.reshape(1,-1)
     Y.reshape(1,-1)
     return cosine_similarity(X, Y)[0][0] # note this is a 2d array, but will have only one value
-
-
-"""
-    corpusCounts(corpus) returns the counts of each token in every chunk of the corpus for type = 0, for type = 1 returns tf idf feature matrix
-    Input: corpus -> List of chunks (sentences) from the corpus
-           type   -> determines whether to do CountVectorizer or TfidfVectorizer
-    Output: X -> 2d numpy array of counts for each token in a chunk if type = 0 else tf idf feature matrix
-"""
-def corpusCounts(corpus, type, second_type = 0, vocab = {}):
-    if second_type == 0:
-        vectorizer = CountVectorizer() if type == 0 else TfidfVectorizer()
-    else:
-        vectorizer = CountVectorizer(vocabulary = vocab) if type == 0 else TfidfVectorizer(vocabulary = vocab)
-    X = vectorizer.fit_transform(corpus)
-    #print(vectorizer.get_feature_names())
-    return X.toarray() #change back to just X for sparse matrix, this converts is to numpy array
-
-
-"""
-    corpusCounts(corpus) returns the normalizedWordFrequency of each token for each chunk : count/ size of sentence as X, and binary counts for each token in a chunk as Y
-    Input: corpus -> List of chunks (sentences) from the corpus, X [This sentence is the one after removing stopwords]
-    Output: X -> 2d array with normalizedWordFrequency for each token in a chunk (feature matrix)
-            Y -> 2d array of binary counts for each token in a chunk. (feature matrix)
-"""
-def normalizedWordFrequencyMatrix(corpus, X):
-    X = X.astype('float64')
-    Y = np.zeros((len(X),len(X[0])))
-    for i in range(len(X)):
-        c = float(len(word_tokenize(corpus[i]))) # To avoid integer division
-        for j in range(len(X[0])):
-            X[i][j] = float(X[i][j]) / c # To avoid integer division
-            Y[i][j] = 1 if X[i][j] > 0 else 0
-    return X,Y
-
-
-"""
-    removeStopWords(sentence) removes the words that do not carry much semantic meaning and returns a list of words that are not stop words
-    Input: sentence -> string to remove stop words from
-    Output: filtered_sentence -> list with only relevant tokens from sentence
-"""
-def removeStopWords(sentence):
-    stop_words = set(stopwords.words('english'))
-    word_tokens = word_tokenize(sentence)
-    filtered_sentence = [w for w in word_tokens if not w in stop_words]
-    return filtered_sentence
-
-
-# def getTopSimilar(question_dict, id_dict, topdoc_data):
-#     question_list = []
-#     similarity_dict = {}
-#     id = 0
-#     answer_section = [[]]*len(question_dict)
-#     for k,v in question_dict:
-#         question_list.append(k)
-#         for answer in topdoc_data[v]:
-#             answer_section[id].append(answer)
-#         id = id + 1
-#     vocab = buildVocab(question_list)
-#     V = corpusCounts(question_list, 0)
-#     V,W = normalizedWordFrequencyMatrix(question_list, V, vocab)
-#     X = corpusCounts(question_list, 0)
-#     for i in range(len(question_list)):
-#         X,Y = normalizedWordFrequencyMatrix(answer_section[i], X, vocab)
-#         for j in range(len(answer_section[i])):
-#             s = question_list[i] + "," + answer_section[j]
-#             similarity_dict[s] = cosineSimilarity( V[i], X[j])[0][0]
-#         print(heapq.nlargest(10, similarity_dict.keys(), key = similarity_dict.get)) #Priority queue for top 10 answers, send this to write to file
-
-
-"""
-    cosineSimilarity(X, Y) returns the cosine similarity of two vectors X and Y
-    Input: Vector X -> which is the question feature vector and Vector Y which is the answer feature vecotr
-    Output: The cosine similarity of vectors X and Y returned as 2d array
-"""
-def cosineSimilarity(X, Y):
-    X.reshape(1,-1)
-    Y.reshape(1,-1)
-    return cosine_similarity(X, Y) # note this is a 2d array, but will have only one value
 
 
 """
@@ -337,7 +282,6 @@ def writeToFile(question_list, question_dict, answer_list, file_name): #answer_l
 
 topdoc_data = getData("training/topdocs/", 1)
 
-
 a = genXMLListFromTopDocs(topdoc_data[12])
 
 data = getData("training/qadata/", 0)
@@ -347,7 +291,17 @@ id_dict = parseRelevantDocs(data[2])
 
 corpus = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 
+
+####################################### TESTING ################################
+
+ner = NERecognizer()
+print(ner.getEntities("Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+print(ner.getAnsCandidates("who", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+print(ner.getAnsCandidates("when", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+print(ner.getAnsCandidates("where", "Jim was a good friend of Wayne Gretzky when he met him on 19th June at 9 pm in 1980 in Berkeley, CA near Mt. Everest."))
+corpus = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+
 wtv = W2V(corpus)
-print(wtv.getAvgWordVec("simply dummy text"))
+print(wtv.getAvgWordVec("simply dummy text bruv."))
 print(wtv.getAvgWordVecTokenized(['simply', 'dummy', 'text']))
 print(wtv.getAvgWordVecMat([['simply', 'dummy', 'text'],['Lorem', 'Ipsum'], ['Aldus', 'PageMaker', 'publishing', 'software']]))
