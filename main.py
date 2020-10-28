@@ -15,8 +15,107 @@ import re
 import os
 import io
 import heapq
+import gensim
+import spacy
 
 # enddocnore = re.compile(r"<docno> ?(.*) ?<\docno>")
+'''NERecognizer class implements an Named Entity Recognizer which can output relevant entities based on question type.'''
+class NERecognizer():
+    # initializes the model
+    def __init__(self):
+        self.model = spacy.load("en_core_web_sm")
+
+    """
+        ner.getEntities(sent) returns a dictionary mapping strings to a list of strings where each key is a possible entity label (PERSON, GPE, DATE, TIME...)
+        and the value is the list of all entities in the sentence matching that label
+        Input : sent -> the sentence to get entities from (must be a whole string: e.g: "Hi it is 3 PM", not ['Hi', 'it', 'is', '3', 'pm'])
+        Output : entities -> dictionary mapping labels to a list of words matching that entity.
+    """
+    def getEntities(self, sent):
+        doc = self.model(sent)
+        entities = {}
+        for e in doc.ents:
+            if e.label_ not in entities:
+                entities[e.label_] = [e.text]
+            else:
+                entities[e.label_].append(e.text)
+
+        return entities
+
+    """
+        ner.getAnsCandidates(questionType, answer) returns a list of words from the answer matching question type (can be "who", "when", "where"), otherwise returns []
+        Input : questionType -> the type of question ("who", "when", "where")
+                answer -> The answer string
+        Output : ans_cands -> list of entities from sentence matching the question type (PERSON for who, DATE and TIME for when, and GPE and LOC for where)
+    """
+    def getAnsCandidates(self, questionType, answer):
+        entities = self.getEntities(answer)
+        ans_cands = []
+
+        if questionType == "who":
+            ans_cands = entities['PERSON'] if 'PERSON' in entities else []
+
+        elif questionType == "when":
+            ans_cands = entities['DATE'] if 'DATE' in entities else []
+            ans_cands += entities['TIME'] if 'TIME' in entities else []
+
+
+        elif questionType == "where":
+            ans_cands = entities['GPE'] if 'GPE' in entities else []
+            ans_cands += entities['LOC'] if 'LOC' in entities else []
+
+        return ans_cands
+
+
+class W2V:
+    """
+        init(corpus) creates new Word2Vec model trained on the provided corpus
+        Input: corpus -> raw text of training data - e.g: the topdocs and the question training data merged together
+        Output: A trained W2V model which can be used to provide word models
+    """
+    # scope for improvement:
+    # - could pre-train the model and store the keyvectors to disk? Or keep it so that it can be trained on the fly for unknown words? Or keep it pretrained and then
+    # use it for on the fly training if necessary too?
+    # - maybe instead of adding np.zeros add feature vector for unknown word?
+    def __init__(self, corpus, minCount = 1):
+        sents = sent_tokenize(corpus)
+        tokens = [word_tokenize(sent) for sent in sents]
+        self.model = gensim.models.Word2Vec(tokens, min_count = minCount, window = 5) # train a word2vec model which ignores words occurring less than 3 times, with window size 5.
+        self.wv = self.model.wv # dictionary mapping words to their w2v numpy vectors
+
+    '''
+    wtv.getAvgWordVec() creates the sentence feature vector by averaging the word vectors for all the words in the sentence.
+    input: sentence -> the untokenized sentence to get feature vector from.
+    output: the feature vector for the sentence.
+    '''
+    def getAvgWordVec(self, sentence):
+        words = word_tokenize(sentence)
+        sumv = np.zeros(100)
+        for w in words:
+            sumv += self.wv[w] if w in self.wv else np.zeros(100) # if word in vocab add its feature vector otherwise add 0s
+
+        return sumv/len(words)
+
+    '''
+    wtv.getAvgWordVecTokenized() works exactly the same, but accepts a tokenized sentence as input in case it's already available somewhere.
+    '''
+    def getAvgWordVecTokenized(self, sentence):
+        sumv = np.zeros(100)
+        for w in sentence:
+            sumv += self.wv[w] if w in self.wv else np.zeros(100)
+
+        return sumv/len(sentence)
+
+    '''
+    wtv.getAvgWordVecMat() takes a list of tokenized sentences (a 2D array of strings) as input in case it's already available somewhere.
+    '''
+    def getAvgWordVecMat(self, sentences):
+        out = []
+        for s in sentences:
+            out.append(self.getAvgWordVecTokenized(s))
+
+        return out
+
 
 """
     getData(path) returns a list of strings where each string is .txt or xml file in a given path
@@ -176,41 +275,33 @@ def cosineSimilarity(X, Y):
 
 
 def getTopSimilar(question_dict, id_dict, topdoc_data, stopw_lemmatize = 1, fm_type = 0, nwf_or_bow = 0):
-    question_list = []
     similarity_dict = {}
-    id = 0
-    answer_section = [[]]*len(question_dict)
-
-    for k,v in question_dict.items():
-        if stopw_lemmatize == 1
-            question_list.append(lemmatize(removeStopWords(k)))
-        else
-            question_list.append(k))
-        for sent_chunk in topdoc_data[id_dict[v]]:
-            if stopw_lemmatize == 1:
-                answer_section[id].append(lemmatize(removeStopWords(sent_chunk)))
-            else:
-                answer_section[id].append(sent_chunk)
-        id = id + 1
-
+    question_list, answer_section = getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize)
     vocab = buildVocab(question_list)
 
-    V = corpusCounts(question_list, 0, 1, vocab)
     if fm_type == 0:
+        V = corpusCounts(question_list, 0, 1, vocab) # gets counts
         V,W = normalizedWordFrequencyMatrix(question_list, V)
+    elif fm_type = 1:
+        V = corpusCounts(question_list, 1, 1, vocab) #gets tfidf matrix
+    else:
+        # V = word2Vec
 
     result = [[]]
     for i in range(len(question_list)):
-        X = corpusCounts(answer_section[i], 0, 1, vocab)
-
-        X,Y = normalizedWordFrequencyMatrix(answer_section[i], X)
+        if fm_type == 0:
+            X = corpusCounts(answer_section[i], 0, 1, vocab)
+            X,Y = normalizedWordFrequencyMatrix(answer_section[i], X)
+        elif fm_type == 1:
+            X = corpusCounts(answer_section[i], 1, 1, vocab)
         #print("ans sec", len(answer_section[i]), answer_section[i][0])
         for j in range(len(answer_section[i])):
             s = question_list[i] + "," + answer_section[i][j]
             #print("V", V.shape)
-            similarity_dict[s] = cosineSimilarity( V[i], X[j])
+            similarity_dict[s] = cosineSimilarity( V[i], X[j]) if fm_type != 2 else getEuclideanDistance(V[i], X[j])
         result[i].append(heapq.nlargest(10, similarity_dict.keys(), key = similarity_dict.get)) #Priority queue for top 10 answers, send this to write to file
     return result
+
 
 """
     buildVocab(question_list) goes through all questions to build vocabulary out of questions, this will be used to make the feature matrix
@@ -287,6 +378,24 @@ def getEuclideanDistance(X, Y):
     return euclidean_distances(X,Y)[0][0]
 
 
+def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize, ):
+    answer_section = [[]]*len(question_dict)
+    id = 0
+    question_list = []
+    for k,v in question_dict.items():
+        if stopw_lemmatize == 1:
+            question_list.append(lemmatize(removeStopWords(k)))
+        else:
+            question_list.append(k)
+        for sent_chunk in topdoc_data[id_dict[v]]:
+            if stopw_lemmatize == 1:
+                answer_section[id].append(lemmatize(removeStopWords(sent_chunk)))
+            else:
+                answer_section[id].append(sent_chunk)
+        id = id + 1
+    return question_list, answer_section
+
+
 data = getData("training/qadata/", 0)
 question_dict = parseQuestions(data[0])
 id_dict = parseRelevantDocs(data[1])
@@ -301,7 +410,7 @@ topdoc_data = getData("training/topdocs/", 1)
 xml_dict = getXmlDict(topdoc_data)
 results = getTopSimilar(question_dict, id_dict, xml_dict)
 
-writeToFile(question_list, question_dict, file_name)
+
 
 # print(topdoc_data[0])
 # parseTopDocs(topdoc_data)
