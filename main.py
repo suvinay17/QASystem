@@ -18,6 +18,7 @@ import heapq
 import gensim
 import spacy
 import wtv
+import ner
 
 # enddocnore = re.compile(r"<docno> ?(.*) ?<\docno>")
 """
@@ -301,8 +302,8 @@ def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 1):
 
 
 data = getData("training/qadata/", 0)
-question_dict = parseQuestions(data[1])
-id_dict = parseRelevantDocs(data[2])
+question_dict = parseQuestions(data[0])
+id_dict = parseRelevantDocs(data[1])
 # corpus = [
 # 'This is the first document.',
 # 'This document is the second document.',
@@ -321,6 +322,9 @@ questions, answer_section = getQnA(question_dict, xml_dict, id_dict)
 word_to_vec = wtv.WTV(questions, [s for answers in answer_section for s in answers])
 
 results = getTopSimilar(question_dict, id_dict, xml_dict)
+NER = ner.NERecognizer()
+
+writeToFile(questions, question_dict, NER.getAnsFromQuestionList(questions, answer_section), prediction)
 
 
 
