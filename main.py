@@ -17,6 +17,7 @@ import io
 import heapq
 import gensim
 import spacy
+import wtv
 
 # enddocnore = re.compile(r"<docno> ?(.*) ?<\docno>")
 """
@@ -148,7 +149,7 @@ def normalizedWordFrequencyMatrix(corpus, X):
     for i in range(len(X)):
         c = float(len(word_tokenize(corpus[i]))) # To avoid integer division
         for j in range(len(X[0])):
-            X[i][j] = float(X[i][j]) / c # To avoid integer division
+            X[i][j] = float(X[i][j]) / c if c != 0 else float(X[i][j]) # To avoid integer division
             Y[i][j] = 1 if X[i][j] > 0 else 0
     return X,Y
 
@@ -190,7 +191,7 @@ def getTopSimilar(question_dict, id_dict, topdoc_data, stopw_lemmatize = 1, fm_t
         return
         # V = word2Vec
 
-    result = [[]]
+    result = [[]*10]*len(question_list)
     for i in range(len(question_list)):
         if fm_type == 0:
             X = corpusCounts(answer_section[i], 0, 1, vocab)
@@ -281,7 +282,7 @@ def getEuclideanDistance(X, Y):
     return euclidean_distances(X,Y)[0][0]
 
 
-def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize, ):
+def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 1):
     answer_section = [[]]*len(question_dict)
     id = 0
     question_list = []
@@ -300,8 +301,8 @@ def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize, ):
 
 
 data = getData("training/qadata/", 0)
-question_dict = parseQuestions(data[0])
-id_dict = parseRelevantDocs(data[1])
+question_dict = parseQuestions(data[1])
+id_dict = parseRelevantDocs(data[2])
 # corpus = [
 # 'This is the first document.',
 # 'This document is the second document.',
@@ -311,6 +312,14 @@ topdoc_data = getData("training/topdocs/", 1)
 # addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth eats eated fast fasted ; s 123 what's ")
 # lemmatize("walked walk walks hear heard hears serve served service go went gone")
 xml_dict = getXmlDict(topdoc_data)
+xml_dict_with_stopwords = xml_dict
+
+questions, answer_section = getQnA(question_dict, xml_dict, id_dict)
+
+# answer_list =
+
+word_to_vec = wtv.WTV(questions, [s for answers in answer_section for s in answers])
+
 results = getTopSimilar(question_dict, id_dict, xml_dict)
 
 
