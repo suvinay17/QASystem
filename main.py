@@ -163,7 +163,8 @@ def normalizedWordFrequencyMatrix(corpus, X):
 def removeStopWords(sentence):
     stop_words = set(stopwords.words('english'))
     word_tokens = word_tokenize(sentence)
-    return " ".join([w for w in word_tokens if not w in stop_words])
+    q_words = ["what", "when", "where", "who", "how"]
+    return " ".join([w for w in word_tokens if w not in q_words and w not in stop_words])
 
 
 
@@ -178,9 +179,8 @@ def cosineSimilarity(X, Y):
     return cosine_similarity(X, Y)[0][0] # note this is a 2d array, but will have only one value
 
 
-def getTopSimilar(question_dict, id_dict, topdoc_data, stopw_lemmatize = 1, fm_type = 0, nwf_or_bow = 0):
+def getTopSimilar(question_list, answer_section, stopw_lemmatize = 0, fm_type = 0, nwf_or_bow = 0):
     similarity_dict = {}
-    question_list, answer_section = getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize)
     vocab = buildVocab(question_list)
 
     if fm_type == 0:
@@ -192,7 +192,7 @@ def getTopSimilar(question_dict, id_dict, topdoc_data, stopw_lemmatize = 1, fm_t
         return
         # V = word2Vec
 
-    result = [[]*10]*len(question_list)
+    result = [[None for m in range(10)] for j in range(len(question_list))]
     for i in range(len(question_list)):
         if fm_type == 0:
             X = corpusCounts(answer_section[i], 0, 1, vocab)
@@ -201,10 +201,13 @@ def getTopSimilar(question_dict, id_dict, topdoc_data, stopw_lemmatize = 1, fm_t
             X = corpusCounts(answer_section[i], 1, 1, vocab)
         #print("ans sec", len(answer_section[i]), answer_section[i][0])
         for j in range(len(answer_section[i])):
-            s = question_list[i] + "," + answer_section[i][j]
+            s = answer_section[i][j]
             #print("V", V.shape)
             similarity_dict[s] = cosineSimilarity( V[i], X[j]) if fm_type != 2 else getEuclideanDistance(V[i], X[j])
-        result[i].append(heapq.nlargest(10, similarity_dict.keys(), key = similarity_dict.get)) #Priority queue for top 10 answers, send this to write to file
+        temp = heapq.nlargest(10, similarity_dict.keys(), key = similarity_dict.get) #Priority queue for top 10 answers, send this to write to file
+        for j in range(len(temp)):
+            print("i, j = "+str(i)+","+str(j))
+            result[i][j] = temp[j]
     return result
 
 
@@ -232,12 +235,15 @@ def buildVocab(question_list):
            file_name -> This specifies what the prediciton file should be called
     Output: Creates a file with the answer patterns
 """
-def writeToFile(question_list, question_dict, answer_list, file_name): #answer_list is a list of lists
+def writeToFile(question_dict, answer_list, file_name): #answer_list is a list of lists
     file = open(file_name, "w")
-    for i in range(len(question_list)):
-        file.write("qid "+id_dict.get(question_list[i])+"\n")
+    #missing_q_nos = [6, 16, 23, 25, 27, 32, 33, 38, 42, 44, 59, 60, 61, 64, 67, 71, 85, 96, 97, 98, 107, 110]
+    lis = list(question_dict.keys())
+    for i in range(len(lis)):
+        file.write("qid "+question_dict[lis[i]]+"\n")
         for answer in answer_list[i]:
             file.write(answer+"\n")
+    file.close()
 
 
 """
@@ -251,13 +257,8 @@ def lemmatize(sent_chunk):
 
 
 def addPosTags(text):
-    text = word_tokenize(text)
-    text_with_tags = pos_tag(text) # List of tuples, access POS tag
-    return text_with_tags
+    return pos_tag(word_tokenize(text)) # List of tuples, access POS tag
 
-
-def getWindowList(text, type):
-    return
 
 
 def get_word_net(word):
@@ -283,7 +284,7 @@ def getEuclideanDistance(X, Y):
     return euclidean_distances(X,Y)[0][0]
 
 
-def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 1):
+def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 0):
     answer_section = [[]]*len(question_dict)
     id = 0
     question_list = []
@@ -302,30 +303,40 @@ def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 1):
 
 
 data = getData("training/qadata/", 0)
+print("get datsa")
 question_dict = parseQuestions(data[0])
+print("question dict")
 id_dict = parseRelevantDocs(data[1])
+print("id dict")
 # corpus = [
 # 'This is the first document.',
 # 'This document is the second document.',
 # 'And this is the third one.',
 # 'Is this the first document?']
 topdoc_data = getData("training/topdocs/", 1)
+print("topdoc data")
 # addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth eats eated fast fasted ; s 123 what's ")
 # lemmatize("walked walk walks hear heard hears serve served service go went gone")
 xml_dict = getXmlDict(topdoc_data)
+print("xmldict")
 xml_dict_with_stopwords = xml_dict
+print("xml dict")
 
 questions, answer_section = getQnA(question_dict, xml_dict, id_dict)
+print("getQnA")
 
 # answer_list =
 
-word_to_vec = wtv.WTV(questions, [s for answers in answer_section for s in answers])
+#word_to_vec = wtv.WTV(questions, [s for answers in answer_section for s in answers])
+#print("w2v")
 
-results = getTopSimilar(question_dict, id_dict, xml_dict)
+results = getTopSimilar(questions, answer_section)
+print("results")
 NER = ner.NERecognizer()
+print("NERECOGNIZER")
 
-writeToFile(questions, question_dict, NER.getAnsFromQuestionList(questions, answer_section), prediction)
-
+writeToFile(question_dict, NER.getAnsFromQuestionList(questions, results), "prediction.txt")
+print("Write to file")
 
 
 # print(topdoc_data[0])
