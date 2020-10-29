@@ -74,7 +74,7 @@ class NERecognizer():
                     tagged_ans = nltk.pos_tag(nltk.word_tokenize(answer_section[i][j]))
 
                     w = 0
-                    noun_phrases = []
+                    # noun_phrases = []
                     buffer = ""
                     rec_flag = False # flag to start recording
                     while w < len(tagged_ans):
@@ -87,16 +87,24 @@ class NERecognizer():
                                 buffer += " " + tagged_ans[w][0]
                         else:
                             if buffer != "":
-                                noun_phrases.append(buffer)
+                                if len(candidate_answers[i]) != len(answer_section[0]):
+                                    candidate_answers[i].append(buffer)
                             buffer = ""
                             rec_flag = False
 
                         w += 1
 
-                    candidate_answers[i].append(noun_phrases)
+                    # candidate_answers[i].append(noun_phrases)
 
                 else:
                     if len(entities) != 0:
-                        candidate_answers[i].append(entities)
+                        for e in entities:
+                            if len(candidate_answers[i]) != len(answer_section[0]):
+                                candidate_answers[i].append(e)
 
         return candidate_answers
+
+qs = ["who am I?", "how are we alive?"]
+ans = [["I am Robert De Niro.", "I don't really know, Michael Jackson."], ["Skin cancer brother.", "Dog whistles I guess"]]
+
+print(NERecognizer().getAnsFromQuestionList(qs, ans))

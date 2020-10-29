@@ -304,9 +304,9 @@ def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 0):
 
 data = getData("training/qadata/", 0)
 print("get datsa")
-question_dict = parseQuestions(data[0])
+question_dict = parseQuestions(data[1])
 print("question dict")
-id_dict = parseRelevantDocs(data[1])
+id_dict = parseRelevantDocs(data[2])
 print("id dict")
 # corpus = [
 # 'This is the first document.',
