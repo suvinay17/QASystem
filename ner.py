@@ -104,6 +104,78 @@ class NERecognizer():
 
         return candidate_answers
 
+
+def getAnsFromQuestionListWithContext(self, questions, answer_section, window = 2):
+    vocab = buildVocab(questions)
+    question_types = ["who", "when", "where", "what", "how"]
+    candidate_answers = [[] for i in range(len(questions))]
+    for i in range(len(questions)):
+            # determine question type
+        question_words = nltk.word_tokenize(questions[i])
+        q_type = None
+        for type in question_types:
+            if type in question_words:
+                q_type = type
+        entities_with_context = {}
+
+        for j in range(len(answer_section[i])):
+
+            ans_sec = answer_section[i][j].strip().split()
+            entities = self.getAnsCandidates(q_type, answer_section[i][j])
+
+
+            if q_type == "what" or q_type == "how":
+                    # in these cases, just return whatever noun phrases you can find in the sentence.
+                tagged_ans = nltk.pos_tag(ans_sec)
+
+                w = 0
+                    # noun_phrases = []
+                buffer = ""
+                rec_flag = False # flag to start recording
+                while w < len(tagged_ans):
+                    if tagged_ans[w][1] in ["NN", "NNP", "NNS"]:
+                        if rec_flag == False:
+                            buffer += tagged_ans[w][0]
+                            rec_flag = True
+
+                        else:
+                            buffer += " " + tagged_ans[w][0]
+                    else:
+                        if buffer != "":
+                            tokbuf = buffer.strip().split()
+                            first = max(0,ans_sec.index(tokbuf[0])-window) if tokbuf[0] in ans_sec else 0
+                            last = min(len(ans_sec), ans_sec.index(tokbuf[len(tokbuf)-1])+window+1) if tokbuf[len(tokbuf)-1] in ans_sec else len(tokbuf)-1
+
+                            context = ans_sec[first:last]
+                            entities_with_context[" ".join(context)] = buffer
+                        buffer = ""
+                        rec_flag = False
+
+                    w += 1
+
+
+
+            else:
+                if len(entities) != 0:
+                    for e in entities:
+                        tokent = e.strip().split()
+
+                        first = max(0,ans_sec.index(tokent[0])-window) if tokent[0] in ans_sec else 0
+                        last = min(len(ans_sec), ans_sec.index(tokent[len(tokent)-1])+window+1) if tokent[len(tokent)-1] in ans_sec else len(tokent)-1
+
+                        context = ans_sec[first:last]
+                        entities_with_context[" ".join(context)] = e
+
+
+        context_list = list(entities_with_context.keys())
+        orderedclist = sorted(context_list, key = lambda c : cosineSimilarity(corpusCounts([c],1,1,vocab), corpusCounts([questions[i]],1, 1, vocab)), reverse = True)
+
+        final = list(map(lambda o : entities_with_context[o], orderedclist))[:len(answer_section[i])]
+
+        candidate_answers[i].extend(final[:len(answer_section[i])])
+
+    return candidate_answers
+
 qs = ["who am I?", "how are we alive?"]
 ans = [["I am Robert De Niro.", "I don't really know, Michael Jackson."], ["Skin cancer brother.", "Dog whistles I guess"]]
 

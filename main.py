@@ -327,16 +327,16 @@ def getTestDict(test_topdoc_data, files, test_question_dict):
 
 
 data, files = getData("training/qadata/", 0)
-question_dict = parseQuestions(data[0])
-id_dict = parseRelevantDocs(data[1])
+question_dict = parseQuestions(data[1])
+id_dict = parseRelevantDocs(data[2])
 topdoc_data, files = getData("training/topdocs/", 1)
 xml_dict = getXmlDict(topdoc_data) # has stop words
 questions, answer_section = getQnA(question_dict, xml_dict, id_dict)
-results = getTopSimilar(questions, answer_section, 1, 1)
+results = getTopSimilar(questions, answer_section, 1, 0)
 print("results")
 NER = ner.NERecognizer()
 
-writeToFile(question_dict, NER.getAnsFromQuestionList(questions, results), "train_prediction.txt")
+writeToFile(question_dict, NER.getAnsFromQuestionList(questions, results), "prediction.txt")
 
 
 ###################################################################################################

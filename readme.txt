@@ -20,3 +20,7 @@ python3 main.py
 This generates the prediction files for test and training
 
 Uncomment line 345 to 355 to also generate test predictions
+
+PLEASE NOTE : The train prediction file is called prediction.txt where as test prediction file is called test_prediction.txt
+For using inferior #Extraction Strategy 2 as explained  in the report when the WriteToFile() method is invoked on lines 339 and 354, the method NER.getAnsFromQuestionListWithContext() 
+should be used instead of NER.getAnsFromQuestionList.
