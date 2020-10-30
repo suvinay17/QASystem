@@ -1,5 +1,4 @@
 qid 0
-team
 press gretzky
 wayne
 angeles kings
@@ -9,83 +8,84 @@ trades
 sports
 wednesday
 home edition sports
+part
 qid 1
-vincent van
-quality commemoration
-foundation spokeswoman madeleine a. wardenaar
 manufacturer
 vincent
 art
 van gogh reproductions
 bottles
 champagn
-rubin
+r
+van gogh,0793
+cash
+van gogh centennial
 qid 2
-harvard
-looks
-gender
-hip show
-mr. mckee
-audience
-problem
-frustration
-players
+prices
+anise
+cloves
+java vanilla beans
+report
 year
+import bill
+tons
+spices
+allspice
 qid 3
-nation
-attic
-spies
-institution
-time
-labs
-cyclamate
-consideration
-fda
-reinstatement
+trees
+years
+sales
+winter greenery
+tenbury market
+tuesdays
+christmas
+year
+bunches
+mistletoe
 qid 5
-one
-kind
-world
-technology
-towards
-kind
-cardinals
-gilmartin
-image
-shape
+stanford star
+minutes
+cardinal
+invitation tournament victory
+wisconsin
+monday
+impression
+badgers
+crowd
+sports keefe
 qid 7
-harvard
-looks
-gender
-hip show
+selections
+sausage
+herb potatoes
+pandoro
+bread
 mr. mckee
 audience
 problem
 frustration
-players
-year
-qid 8
-information
-column
-mercury news wire services
-clockmaker
-lifeblood
 harvard
-looks
-gender
-place
-oil crisis
+qid 8
+container
+destination nov.
+curies
+tritium
+report
+body
+born
+mitchell
+finds
+series
 qid 9
-problem
-monarchy today
-part
-life
-nation
-feeling
-gathering
-proportion
-scott
-consequence
+michelangelo
+painting
+man
+gift
+intellect
+fresco
+pope julius ii
+adam
+god
+arms
 qid 10
 month
 combe
@@ -94,9 +94,9 @@ product
 men
 hair
 minutes
-wsj870730-0122
-hl marketing
+survey
 men
+%
 qid 11
 adam
 eyes
@@ -105,223 +105,232 @@ people
 visitors
 blond
 writers
-drugs
-harvard
-looks
+results
+impressions
+case
 qid 12
-w. m. kent burtner
-larry king live ''
 qid 13
 qid 14
 change guinea
 guinea
+peru
+south america
 qid 15
-harvard
-looks
-gender
-hip show
 mr. mckee
 audience
 problem
 frustration
-players
-year
+harvard
+looks
+gender
+i
+baker
+physiology
 qid 17
+seasons
+peak
+career
+strikeouts
+year
 home runs
 game
-cameras
+season
+home runs
 crisp rolls
-deft cymbal work
-trademark
-heat
-heat
-fences
-seasons
 qid 18
+bethel
+n.y.
+maryland
 qid 19
 i
 childhood
 belief
 jackson pollock
 painter
-i
-minutes
-business
-wife
-correction
+bc-wkd
+bc-wkd
+pollock
+release weekend editions
+ap weekend entertainment
 qid 20
-mr. mckee
-audience
-problem
 john henry
 horse park
 lexington
 public
-feeling
-gathering
-proportion
+something
+cable
+city
+group
+rev
+city
 qid 21
 brinkley
-pocklington
-mcsorley
-everybody
-i
+front
+suit
+people
 man
 teaneck talent agent
 years
-front
-suit
+a077
+am-penthouse-sex slave
+ld-writethru
 qid 22
-image
-shape
-brain
-mr. melloan
-editor
-journal
-mr. mckee
-audience
-problem
-point counterpoint
+population
+catholic
+farmers
+mixture
+beliefs
+worship
+goddess
+earth
+indiana
+people
 qid 24
-referendum
-november
-ballot
-town supervisor alan scott
-tuesday
-harvard
-looks
-gender
 s
 bc-continent-bolivia-glance
+bc-continent-bolivia-glance
+adv28
+release sunday
+crisis
+bolivia
+glance
+bc-continent
+press
 qid 26
-west
+dallas
 u.s.
+u.s.
+cincinnati
+west
 qid 28
 cell carcinoma
 skin cancers
 thousands
 people
 year
-development
-genetics
-electronics
-transistor age
-excuse
+melanoma
+mole
+kind
+cancer
+october
 qid 29
-1936
 1983
-about a week
+1936
+1974
+11-mile
+1966
+the late 1940s
 qid 30
 william gibson
 burnett
 gideon
-garrett
-irving teitelbaum
+thom
 winston
 qid 31
-team
-face
-gair
-coach
-job
-playing coach
-defensemen
-adults
-testing
-uncertainties
+veterinarians
+techniques
+school
+courses
+lay person
+phenomenon
+technique
+pets
+difference
+mouth
 qid 34
-guitar
-michael
-boat
-bookseller
-history books
-mr. mckee
-audience
-problem
-future
-yamaguchi
+reason
+opponents
+use
+napalm
+chemical weapon
+chemical
+fire
+mideast
+war napalm
+aircraft
 qid 35
-team
-face
-gair
-coach
-job
-playing coach
-defensemen
 cnn
 beginnings
 cnn
+success
+december
+cnn
+operating profit
+june
+turner
+administration
 qid 36
-tom ard
-robert johnson
-elvis presley
-richard
-george v
-jonathan
-carolyn
+biography
+james boswell
+samuel johnson
+eric breathe
+eric warm
 qid 37
-w. m. kent burtner
-charles
-andy renko
+steven r. churm
+tustin pacific bell
 la122090-0080
 bush smith
+miles
 qid 39
-harvard
-looks
-gender
-hip show
-mr. mckee
-audience
-problem
-frustration
-players
-year
+fender stratocaster
+hell
+photo
+montage
+below
+masters
+collins
+keith richards
+springsteen
+stratocaster blasters
 qid 40
+henry butler
+william butler yeats
+mary alice
+paul butler
+carl lumbly
+sheryl lee ralph
+vonetta mcgee
 ron mcanally
 john henry
 jonathan sheppard
-jockey jorge velasquez
-henry butler
-baker
-william butler yeats
 qid 41
-rabbi jack shechter
+wellman
+ahmed fathy sorour
 melloan
-sayed moussa
 qid 43
+eddie murphy
+parents
+kids
+games
+i
+years
+kids
+kids
 cardinals
 remainder
-yiddish
-curriculum
-spring
-zuckerman
-future
-language
-amount
-level
 qid 45
-i
-rogie
-i
-example
-keith crowder
-cyberspace mean
 books
 living
 enjoyment
 farrow
+cia
+counterespionage
+carol
+center stage music
+carol
+i
 qid 46
 qid 47
+column dismissals
+baseball players
+stennett
+rennie
+pirates
+baseball team
+equestrian
 box
 name
-rallye club
-valley
-box
-phone
-message
-box
-address
-p.o
+grant ranch horseshow team
 qid 48
 deal
 aspect
@@ -332,124 +341,133 @@ sinemet
 treatment
 parkinson
 disease
-executives
+care
 qid 49
+alberta
+canada
 yankee stadium
 qid 50
-guitar
-michael
-boat
-bookseller
-history books
-mr. mckee
-audience
-problem
-future
-yamaguchi
+dame
+leprechaun
+difference
+university mascot
+events
+parades
+speeches
+schools
+club meetings
+classes
 qid 51
 column marley
 bob
+feasibility
+bob marley museum
 rita marley
 marley
 mother cedella booker
 children
 women
 co-workers
-band members
-music publishers
 qid 52
+hart
+stoll
 qid 53
-jonathan
-alyssa milano
-gary stevens
+fri pms
+m joan lunden
+scott williams
+weatherman spencer christian gestures
+m charles gibson
+bryant gumbel
+deborah norville
+willard scott
+david hartman
+bryant gumbel
 qid 54
-image
-shape
-brain
-tate
-grant
-government
-purchase
-pictures
-mr. melloan
-editor
+hiking
+box
+name
+singles
+club
+box
+phone
+621-2898
+box
+address
 qid 55
-niceties
 costs
-nobody
-i
-way
+niceties
 people
 bumpkins
 gilmartin
 results
 impressions
+adam
+eyes
+researchers
 qid 56
-team
-face
-gair
-coach
-job
-playing coach
-defensemen
-adults
-testing
-uncertainties
+tv commercials
+company
+ones
+kathie lee gifford
+costumes
+dances
+sings
+decks
+carnival cruise lines
+carnival cruise lines
 qid 57
 west
 qid 58
-team
+jan.
+households
+name martha stewart
+wellman
+stewart
+crain
+chicago business photo
+edition
+b2
 costume designer
-credit
-clothing style
-face
-gair
-coach
-job
-playing coach
-defensemen
 qid 62
-larry robinson
-jeffrey bleustein
-opera
-placido domingo
-danny devito
-lena horne
-rabbi jack shechter
-grinch
+henson
+larry mcshane
+jim henson
+kermit
+bert
+barbie
 qid 63
-team
-face
-gair
+kell
+bonta
+luyben
+experience
+beach
+procedure
+hazmat
+crews
 coach
 job
-playing coach
-defensemen
-adults
-testing
-uncertainties
 qid 65
-coach
-job
-i
-gms
-league sell tickets
 care
 woman
 months
 pregnancy
-i
+gazeta mercantil
+newspaper
+leader
+months
+months
+delay
 qid 66
+region
+basin
+world
+tourist attraction
+world
+landmarks
 harding
 jump
 triple-axel
 repertoire
-competition
-cleanup crew
-substance
-gutter
-luyben
-pact
 qid 68
 am-krispies-vitamins
 snap
@@ -462,15 +480,11 @@ press writer washington
 ap
 snap
 qid 69
-gilmartin
-joe raposo
+schoolteacher franz gruber
 mendelssohn
-larry robinson
-jeffrey bleustein
+gilmartin
+mitchell parish
 qid 70
-rubin
-players
-year
 vorstadt
 hitler
 box
@@ -478,134 +492,177 @@ cost
 year
 box
 cost
+initiation fee
+year
+mr. wellman
 qid 72
 jonathan
 carolyn
+ellen graham
+robert mckee
+mark catchpole
+ken catchpole
+irving teitelbaum
 qid 73
 william conrad
-jose santos
+fatman
+fatman
+joe penny
+johnny joined
 david hartman
 bryant gumbel
-johnny joined
+bill winfrey
+george orwell
 qid 74
+egypt
+alexandria
+egypt
+the netherlands
+p=105
+netherlands
+netherlands
+amsterdam
+netherlands
+west
 qid 75
 qid 76
-information
-hills region
-dakota
-department
-tourism
-lake plaza
-pierre
-s.d
 color
 photo
+needles
+hills
+country south-dakota
+travel
+years
+washington
+lincoln
+teddy roosevelt
 qid 77
-the first day
 40
 1964
 the year
-about a week
+the 1970s
+1975
+every year
+the first day
 qid 78
-nobody
-i
-way
-monarchy
-cleanup crew
-substance
-gutter
-luyben
-mr. mckee
-audience
+exmoor
+climate
+storm
+flood
+lynmouth
+people
+houses
+bridges
+point
+view
 qid 79
+i
+rest
+taxpayers
 bar code
 information
-guitar
-michael
-boat
-bookseller
-history books
-mr. mckee
-audience
-problem
+stock
+sj san
+mercury news
+wednesday
+wednesday
 qid 80
 qid 81
+oliver stone
+brian de palma
+terrence malick
+w. m. kent burtner
+antonini
+cs lewis
+mcluhan
 baker
 qid 82
+dunes resort
+golf course
+tennis courts
+end
+isle
+palms
+north
+charleston
+damage
 september
-jokes owner
-opfer
-beach resort
-course
-reign
-sense
-identity
-stages
-negotiations
 qid 83
-10 minutes ago
+1874
+sunday
+1961
+1912
 qid 84
+silence
+lambs
+orion
 buildings
 resort
 percent
 houses
-silence
-lambs
-orion
 photo
 mystery
 trout
 qid 86
-singles
-box
-cost
-club membership
-skating
-box
-name
-silver streaks
-box
-phone
+rumor
+children
+placebos
+woman
+snags
+italy
+franco moschino
+alitame
+monsanto
+aspartame
 qid 87
-information
-column
-mercury news wire services
-clockmaker
-lifeblood
-harvard
-looks
-gender
-place
-list
+state health department
+portion
+love canal neighborhood
+areas
+niagara falls
+bonta
+health department
+state law
+inspectors
+material
 qid 88
+brazil
+uruguay
+argentina
+chile
+venezuela
+egypt
+alexandria
+egypt
+west
 qid 89
-problem
-monarchy today
-part
-life
-nation
-image
-shape
-brain
-tate
-grant
+opera singer placido domingo
+actor danny devito
+singer
+horne
+stars
+muppets
+court
+tuesday
+singer
+fraud claims
 qid 90
-kimberly-clark
 party
-harvard
-looks
-gender
-hip show
-mr. mckee
-audience
-problem
-frustration
+kimberly-clark
+kimberly-clark
+diaper plant
+carolina
+today
+birthdays
+actress virginia mayo
+actor efrem zimbalist jr.
+u.s. rep. shirley chisholm
 qid 91
 qid 92
-consumers
-income brackets
-speciality fruits
-vegetables
+danza
+piece
+cake
+jonathan
 jonathan
 character
 show
@@ -614,31 +671,40 @@ danza
 tv daughter
 qid 93
 qid 94
-tate
-grant
-government
-purchase
-pictures
-coffee part
-phrase
-break
-extinction
-jesse meyers
+money
+pox vaccine
+questions
+vaccine
+varivax
+immunity
+peterson
+pox
+adulthood
+vaccine
 qid 95
-photo
-beat
-years
-bob marley
-death
-settlement
-disputes
-reggae king
-estate
-works
+arts
+gormlessness
+cinema
+andrews
+gump
+robert
+lion king
+roger allers
+minkoff mina tannenbaum
+martine dugowson
 qid 99
 about a week
 qid 100
+brian gadbery
 goodall
+jane
+goodall
+jane goodall
+jane goodall
+jane
+jane
+jane goodall
+jane goodall
 qid 101
 dec
 books
@@ -651,97 +717,101 @@ stockton axson
 arthur s.
 princeton university press
 qid 102
-information
-column
-mercury news wire services
-clockmaker
-lifeblood
-harvard
-looks
-gender
-place
-oil crisis
+beginning
+edmonton
+robitaille
+carson
+trains
+full-time
+edmonton
+alberta
+scrutiny
+i
 qid 103
-point counterpoint
-value
-audio
-video tapes
-goal
+month
+co.
+test-marketing
+midwest pepsi a.m.
+version
+flagship
+drink
 part
 day
 terms
-soft-drink consumption
-spokesman
 qid 104
-the past five years
-three months
 1985
+1984
+the 21st
+the past five years
+24-hour
 qid 105
-adam
-eyes
-researchers
-people
-visitors
-blond
-writers
-drugs
-harvard
-looks
+produce counters
+fruits
+bit
+path
+consumers
+pomegranates
+guava
+kumquats
+melons
+santa clause
 qid 106
-rabbi jack shechter
-melloan
-sayed moussa
+elizabeth ii
+elizabeth ii
+barbara church
+lady sabrina
+burley
 qid 108
-historian robert m. utley
 billy the kid
 sheriff pat garrett
 sumner ranch house
 pat garrett
 billy
+historian robert m. utley
+brady
 garrett
-walter noble burns
-la073090-0139
-michael haederle
+pete maxwell 's
+garrett
 qid 109
 mendelssohn
-rabbi jack shechter
-ahmed fathy sorour
-joe raposo
+glover
+mitchell parish
+mcnall
+gilmartin
+marks
 qid 111
 david kirk
 jim bolger :
-jose santos
-garrett
-irving teitelbaum
-peter c. myers
+nz
+george gregan
 qid 112
-about a week
+1976
+1960s
 qid 113
 qid 114
+alan greth
+grinch
+grinch
 rules
 seuss
 grinch
-larry robinson
-jeffrey bleustein
-alan greth
+choppelas
 grinch
-rabbi jack shechter
+grinch
 qid 115
-government people
-texas company lots
-money
-bank
-independence
-colonies
-identities
-dominions
-commonwealth
-royalist
+clothes
+doll costumes
+characters
+accompanying
+girls
+publishes
+tate
+europe
+collection
+expressionism
 qid 116
 about a week
 qid 117
-bar code
-information
 crash site
 los-angeles
 aviation
@@ -750,3 +820,5 @@ death
 escape
 fuel
 jetliner
+los angeles
+airport

@@ -5,7 +5,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
-#from transformers import AutoTokenizer
 #nltk.download('stopwords') if stop words not downloaded already
 #nltk.download('averaged_perceptron_tagger')
 #nltk.download('wordnet')
@@ -15,12 +14,9 @@ import re
 import os
 import io
 import heapq
-import gensim
 import spacy
-import wtv
 import ner
 
-# enddocnore = re.compile(r"<docno> ?(.*) ?<\docno>")
 """
     getData(path) returns a list of strings where each string is .txt or xml file in a given path
     Input : path -> the directory from where the .txt files are read
@@ -37,7 +33,7 @@ def getData(path, type):
         else:
             with io.open(file,'r',encoding = "ISO-8859-1") as f:
                 data.append(f.read().lower()) # lemmatize answers later.
-    return data
+    return data, files
 
 
 """
@@ -67,7 +63,9 @@ def parseRelevantDocs(data):
         id_dict[temp[0]] = temp[1]
     return id_dict
 
-
+"""
+    getXmlDict() returns a dictionary of all relevant doc id's mapping to their texts
+"""
 def getXmlDict(topdocs):
     dict = {}
     for topdoc in topdocs:
@@ -111,21 +109,11 @@ def genXMLListFromTopDocs(doclist):
 
 
 """
-    parseTopDocs(data) returns a dictionary of questions numbers as keys and the topdoc id as the value
-    Input : data -> the string that maps question number to topdoc id
-    Output : xml_dict -> dictionary of key TopDoc integer id number and value string xml doc
-"""
-def parseTopDocs(data):
-
-    # xml_dict = xmltodict.parse(data[0])
-    # print(xml_dict)
-    return
-
-
-"""
     corpusCounts(corpus) returns the counts of each token in every chunk of the corpus for type = 0, for type = 1 returns tf idf feature matrix
     Input: corpus -> List of chunks (sentences) from the corpus
            type   -> determines whether to do CountVectorizer or TfidfVectorizer
+           second_type -> 0/1 values, indicates whether to use vocabulary for CountVectorizer and TfidfVectorizer
+           vocab -> vocabulary dictionary to where each unique word is given a unique index, used by Vectorizers
     Output: X -> 2d numpy array of counts for each token in a chunk if type = 0 else tf idf feature matrix
 """
 def corpusCounts(corpus, type = 0, second_type = 1, vocab = {}):
@@ -179,31 +167,48 @@ def cosineSimilarity(X, Y):
     return cosine_similarity(X, Y)[0][0] # note this is a 2d array, but will have only one value
 
 
-def getTopSimilar(question_list, answer_section, stopw_lemmatize = 0, fm_type = 0, nwf_or_bow = 0):
+""" Takes question list, and candidate answers, generates feature matrix (of different types) and compares the cosine similarity of each question vector to each candidate answer
+    After this, it retains the top 10 answer sentences based on similarity using a heap
+    Input: question_list : list of all question_list
+           answer_section : 2d list where candidate answer j to answer i is stored in answer_section[i][j]
+           fm_type -> optional parameter, 0 for BagOfWords, 1 for tfidf
+           nwf_or_bow ->optional parameter 0 for normalizedWordFrequency, 1 for bag of words
+"""
+def getTopSimilar(question_list, answer_section, fm_type = 1, nwf_or_bow = 0):
+    print("what i want")
+    print(len(question_list), len(question_list[0]))
+    print(len(answer_section), len(answer_section[0]))
+    # print(answer_section[0])
     similarity_dict = {}
     vocab = buildVocab(question_list)
-
+    print("hi")
     if fm_type == 0:
         V = corpusCounts(question_list, 0, 1, vocab) # gets counts
         V,W = normalizedWordFrequencyMatrix(question_list, V)
-    elif fm_type == 1:
-        V = corpusCounts(question_list, 1, 1, vocab) #gets tfidf matrix
+        if nwf_or_bow == 1:
+            V = W
     else:
-        return
-        # V = word2Vec
+        V = corpusCounts(question_list, 1, 1, vocab) #gets tfidf matrix
+
 
     result = [[None for m in range(10)] for j in range(len(question_list))]
+    print("hello")
     for i in range(len(question_list)):
         if fm_type == 0:
             X = corpusCounts(answer_section[i], 0, 1, vocab)
             X,Y = normalizedWordFrequencyMatrix(answer_section[i], X)
+            if nwf_or_bow == 1:
+                X = Y
         elif fm_type == 1:
             X = corpusCounts(answer_section[i], 1, 1, vocab)
         #print("ans sec", len(answer_section[i]), answer_section[i][0])
+        print("hello2")
         for j in range(len(answer_section[i])):
             s = answer_section[i][j]
+            #print("suv")
             #print("V", V.shape)
-            similarity_dict[s] = cosineSimilarity( V[i], X[j]) if fm_type != 2 else getEuclideanDistance(V[i], X[j])
+            similarity_dict[s] = cosineSimilarity( V[i], X[j])
+            #print("sup")
         temp = heapq.nlargest(10, similarity_dict.keys(), key = similarity_dict.get) #Priority queue for top 10 answers, send this to write to file
         for j in range(len(temp)):
             print("i, j = "+str(i)+","+str(j))
@@ -255,12 +260,16 @@ def lemmatize(sent_chunk):
     lemmatizer = WordNetLemmatizer()
     return " ".join([lemmatizer.lemmatize(wd, get_word_net(wd)) for wd in word_tokenize(sent_chunk)])
 
-
+"""
+Adds pos tags to an input string, returns a list of tuples
+"""
 def addPosTags(text):
     return pos_tag(word_tokenize(text)) # List of tuples, access POS tag
 
 
-
+"""# Citation : https://www.machinelearningplus.com/nlp/lemmatization-examples-python/
+Uses wordnet check which word net class a tag belongs to.
+"""
 def get_word_net(word):
 # Citation : https://www.machinelearningplus.com/nlp/lemmatization-examples-python/
     tag = pos_tag([word])[0][1][0].upper()
@@ -270,21 +279,11 @@ def get_word_net(word):
                 "R": wordnet.ADV}
     return tag_dict.get(tag, wordnet.NOUN)
 
-
-def getBertData(question, answer):
-    tokenizer = AutoTokenizer.from_pretrained('bert-base-cased')
-    encoded_input = tokenizer(question, answer)
-    return
-    # tokenizer.decode(encoded_input["input_ids"]) to decode features, for debugging
-
-
-def getEuclideanDistance(X, Y):
-    X = X.reshape(1,-1)
-    Y = Y.reshape(1,-1)
-    return euclidean_distances(X,Y)[0][0]
-
-
-def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 0):
+""" #getQnA takes in question_dict, dictionary of questions mapped to their candidate documents, id_dict : dictionary of id's that maps questions id's to their docno
+    Optional Parameters: stopw_lemmatize -> 0 for not removing stopwords and not using lemmatization, 1 for removing stop words and performing lemmatization.
+                        test -> 0 if we are working on training data, 1 if we are working on the test data
+"""
+def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 0, test = 0):
     answer_section = [[]]*len(question_dict)
     id = 0
     question_list = []
@@ -293,51 +292,63 @@ def getQnA(question_dict, topdoc_data, id_dict, stopw_lemmatize = 0):
             question_list.append(lemmatize(removeStopWords(k)))
         else:
             question_list.append(k)
-        for sent_chunk in topdoc_data[id_dict[v]]:
-            if stopw_lemmatize == 1:
-                answer_section[id].append(lemmatize(removeStopWords(sent_chunk)))
-            else:
-                answer_section[id].append(sent_chunk)
-        id = id + 1
+        if test == 0:
+            for sent_chunk in topdoc_data[id_dict[v]]:
+                if stopw_lemmatize == 1:
+                    answer_section[id].append(lemmatize(removeStopWords(sent_chunk)))
+                else:
+                    answer_section[id].append(sent_chunk)
+            id = id + 1
+        else:
+            for sent_chunk in topdoc_data[v]:
+                if stopw_lemmatize == 1:
+                    answer_section[id].append(lemmatize(removeStopWords(sent_chunk)))
+                else:
+                    answer_section[id].append(sent_chunk)
+            id = id + 1
     return question_list, answer_section
 
 
-data = getData("training/qadata/", 0)
-print("get datsa")
-question_dict = parseQuestions(data[1])
-print("question dict")
-id_dict = parseRelevantDocs(data[2])
-print("id dict")
-# corpus = [
-# 'This is the first document.',
-# 'This document is the second document.',
-# 'And this is the third one.',
-# 'Is this the first document?']
-topdoc_data = getData("training/topdocs/", 1)
-print("topdoc data")
-# addPosTags("suvinay bothra ate breakfast at twelve PM , kartikey played a game on october seventeenth eats eated fast fasted ; s 123 what's ")
-# lemmatize("walked walk walks hear heard hears serve served service go went gone")
-xml_dict = getXmlDict(topdoc_data)
-print("xmldict")
-xml_dict_with_stopwords = xml_dict
-print("xml dict")
+"""
+This method maps each question to the text in relevant doc using using its question number from question_dict
+Input: test_topdoc_data -> Consists
+       files -> consists of the filepaths of all files in the directory, used to get QNO
+       test_question_dict -> dictionary of questions mapped to their numbers
+"""
+def getTestDict(test_topdoc_data, files, test_question_dict):
+    test_dict = {}
+    for i in range(len(files)):
+        split_data = files[i].split('.')
+        number = split_data[len(split_data)-1]
+        lis = list(genXMLListFromTopDocs(test_topdoc_data[i]).values())
+        print(lis)
+        test_dict[number] = ([chunk for chunk in lis])
+    return test_dict
 
+
+data, files = getData("training/qadata/", 0)
+question_dict = parseQuestions(data[0])
+id_dict = parseRelevantDocs(data[1])
+topdoc_data, files = getData("training/topdocs/", 1)
+xml_dict = getXmlDict(topdoc_data) # has stop words
 questions, answer_section = getQnA(question_dict, xml_dict, id_dict)
-print("getQnA")
-
-# answer_list =
-
-#word_to_vec = wtv.WTV(questions, [s for answers in answer_section for s in answers])
-#print("w2v")
-
-results = getTopSimilar(questions, answer_section)
+results = getTopSimilar(questions, answer_section, 1, 1)
 print("results")
 NER = ner.NERecognizer()
-print("NERECOGNIZER")
 
-writeToFile(question_dict, NER.getAnsFromQuestionList(questions, results), "prediction.txt")
-print("Write to file")
+writeToFile(question_dict, NER.getAnsFromQuestionList(questions, results), "train_prediction.txt")
 
 
-# print(topdoc_data[0])
-# parseTopDocs(topdoc_data)
+###################################################################################################
+###Uncomment for test output ##############
+# test_data, files = getData("test/qadata/", 0)
+# test_question_dict = parseQuestions(test_data[0])
+# test_topdoc_data, files = getData("test/topdocs/", 1)
+# test_dict = getTestDict(test_topdoc_data, files, test_question_dict)
+# id_dict = {}
+# questions, answer_section = getQnA(test_question_dict, test_dict, id_dict, 0, 1)
+# #word_to_vec = wtv.WTV(questions, [s for answers in answer_section for s in answers])
+# #print("w2v")
+# results = getTopSimilar(questions, answer_section, 1, 1)
+# NER = ner.NERecognizer()
+# writeToFile(test_question_dict, NER.getAnsFromQuestionList(questions, results), "test_prediction.txt")
